@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Country]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [CountryName] VARCHAR(128) NOT NULL
+)

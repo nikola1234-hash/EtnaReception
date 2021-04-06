@@ -1,0 +1,13 @@
+﻿<Window
+    x:Class="EtnaReception.WPF.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    Title="{Binding Title}"
+    Width="525"
+    Height="350"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid Background="#C4D4F2">
+        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+    </Grid>
+</Window>
