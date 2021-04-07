@@ -23,7 +23,7 @@ namespace BookSoft.DAL.Services.Authentication
             {
                 throw new UserNotFoundException(username);
             }
-            PasswordVerificationResult match = _passwordHasher.VerifyHashedPassword(userAccount.PasswordHash, password);
+            PasswordVerificationResult match = _passwordHasher.VerifyHashedPassword(userAccount.Password, password);
             if(match != PasswordVerificationResult.Success)
             {
                 throw new InvalidPasswordException(username, password);

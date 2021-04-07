@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace EtnaReception.WPF.Views
+namespace EtnaReception.Desktop.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -10,6 +10,7 @@ namespace EtnaReception.WPF.Views
         public MainWindow()
         {
             InitializeComponent();
+
         }
     }
 }

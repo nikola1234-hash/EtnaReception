@@ -1,33 +1,42 @@
 ﻿using BookSoft.DAL.Exceptions;
 using BookSoft.DAL.Services.Authentication;
-using Login.Views;
+using EtnaReception.Desktop.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using System.Windows;
+using Prism.Services.Dialogs;
+using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 
-namespace Login.ViewModels
+namespace EtnaReception.Desktop.ViewModels
 {
-    public class LoginViewModel : BindableBase
+    public class LoginWindowViewModel : BindableBase
     {
         public DelegateCommand<object> LoginCommand { get; }
         public IRegionManager _regionManager;
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IEventAggregator _eventAggregator;
+        public EventHandler SuccessfulLogin;
 
-        public LoginViewModel(IRegionManager regionManager)
+        public LoginWindowViewModel(IAuthenticationService authenticationService,
+                                    IEventAggregator eventAggregator)
         {
             LoginCommand = new DelegateCommand<object>(OnLogin);
-            _regionManager = regionManager;
+            _authenticationService = authenticationService;
+            ErrorMessageViewModel = new MessageViewModel();
+            _eventAggregator = eventAggregator;
         }
 
         private void OnLogin(object passwordBox)
         {
-            var authenticationService = _regionManager.Reson
+            
             var password = passwordBox as PasswordBox;
             try
             {
                 _authenticationService.Login(Username, password.Password);
-                MessageBox.Show("Radi");
+                _eventAggregator.GetEvent<LoginEvent>().Publish(true);
             }
             catch (UserNotFoundException)
             {
@@ -39,16 +48,13 @@ namespace Login.ViewModels
             }
             finally
             {
-                ErrorMessage = "Greska!";
+               // ErrorMessage = "Greska!";
             }
         }
         public MessageViewModel ErrorMessageViewModel { get; set; }
         public string ErrorMessage 
-        { 
-            set
-            {
-                ErrorMessageViewModel.Message = value;
-            } 
+        {
+            set => ErrorMessageViewModel.Message = value;
         }
         private string _username;
 
@@ -57,5 +63,6 @@ namespace Login.ViewModels
             get { return _username; }
             set { SetProperty(ref _username, value); }
         }
+        
     }
 }

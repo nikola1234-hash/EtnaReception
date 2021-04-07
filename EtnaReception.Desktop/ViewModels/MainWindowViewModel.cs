@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace EtnaReception.WPF.ViewModels
+namespace EtnaReception.Desktop.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
