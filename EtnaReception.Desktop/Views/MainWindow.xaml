@@ -8,7 +8,7 @@
     Height="350"
     prism:ViewModelLocator.AutoWireViewModel="True"
     WindowState="Maximized">
-    <Grid>
+    <Grid Background="{StaticResource MainWindowBackgroundColorBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition />

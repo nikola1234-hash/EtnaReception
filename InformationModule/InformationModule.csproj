@@ -2,14 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>Menu</AssemblyName>
+    <AssemblyName>InformationModule</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BookSoft.BLL\BookSoft.BLL.csproj" />
-    <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
-    <ProjectReference Include="..\Home\Home.csproj" />
   </ItemGroup>
 </Project>

@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Menu.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:prism="http://prismlibrary.com/"
     xmlns:nav="clr-namespace:Menu.Navigation"
+    xmlns:prism="http://prismlibrary.com/"
     d:DesignHeight="300"
     d:DesignWidth="300"
     prism:ViewModelLocator.AutoWireViewModel="True"
@@ -27,26 +27,30 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="27"
-                    Foreground="White"
-                    Text="Vila Etna" />
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="27"
+                Foreground="White"
+                Text="Vila Etna" />
 
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <RadioButton
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static nav:NavigationType.HomeView}"
                     Content="Pocetna"
                     FontSize="24"
                     Foreground="White"
-                    Command="{Binding NavigateCommand}"
-                    Style="{StaticResource MenuButtonTheme}" 
-                    CommandParameter="{x:Static nav:NavigationType.BookingView}"/>
+                    Style="{StaticResource MenuButtonTheme}" />
                 <RadioButton
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static nav:NavigationType.ReceptionView}"
                     Content="Recepcija"
                     FontSize="24"
                     Foreground="White"
                     Style="{StaticResource MenuButtonTheme}" />
                 <RadioButton
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static nav:NavigationType.ReceptionView}"
                     Content="Booking"
                     FontSize="24"
                     Foreground="White"

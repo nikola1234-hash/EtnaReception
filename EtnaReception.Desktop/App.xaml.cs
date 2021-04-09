@@ -1,14 +1,17 @@
 ﻿using BookSoft.BLL.Authentications;
+using BookSoft.BLL.Regions;
 using BookSoft.DAL;
 using BookSoft.DAL.DataAccess;
 using BookSoft.DAL.Services.Authentication;
 using BookSoft.Domain;
 using EtnaReception.Desktop.Views;
+using Home;
 using Menu;
 using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Regions;
 using System.IO;
 using System.Windows;
 
@@ -23,7 +26,7 @@ namespace EtnaReception.Desktop
         {
             return Container.Resolve<MainWindow>();
         }
-
+      
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IAuthenticationService, AuthenticationService>();
@@ -52,6 +55,7 @@ namespace EtnaReception.Desktop
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<MenuModule>();
+            moduleCatalog.AddModule<HomeModule>();
         }
     }
 }

@@ -11,14 +11,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BookSoft.BLL\BookSoft.BLL.csproj" />
     <ProjectReference Include="..\BookSoft.DAL\BookSoft.DAL.csproj" />
+    <ProjectReference Include="..\Home\Home.csproj" />
     <ProjectReference Include="..\Menu\Menu.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="State\" />
   </ItemGroup>
 </Project>

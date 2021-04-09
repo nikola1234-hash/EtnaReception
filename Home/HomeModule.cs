@@ -1,31 +1,28 @@
 ﻿using BookSoft.BLL.Regions;
 using Home.Views;
-using Menu.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace Menu
+namespace Home
 {
-    public class MenuModule : IModule
+    public class HomeModule : IModule
     {
+
         private readonly IRegionManager _regionManager;
 
-        public MenuModule(IRegionManager regionManager)
+        public HomeModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
-
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RegisterViewWithRegion(RegionNames.MenuRegion, typeof(ViewA));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(HomeView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<HomeView>();
-            containerRegistry.RegisterForNavigation<ReceptionView>();
         }
-        
     }
 }
