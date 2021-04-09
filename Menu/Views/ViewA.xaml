@@ -50,7 +50,7 @@
                     Style="{StaticResource MenuButtonTheme}" />
                 <RadioButton
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Static nav:NavigationType.ReceptionView}"
+                    CommandParameter="{x:Static nav:NavigationType.BookingView}"
                     Content="Booking"
                     FontSize="24"
                     Foreground="White"

@@ -1,29 +1,28 @@
-﻿using BookSoft.BLL.Regions;
-using Home.Services;
-using Home.Views;
+﻿using Booking.Views;
+using BookSoft.BLL.Regions;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace Home
+namespace Booking
 {
-    public class HomeModule : IModule
+    public class BookingModule : IModule
     {
-
         private readonly IRegionManager _regionManager;
 
-        public HomeModule(IRegionManager regionManager)
+        public BookingModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
+
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(HomeView));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(BookingView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<HomeView>();
+            containerRegistry.RegisterForNavigation<BookingView>();
         }
     }
 }

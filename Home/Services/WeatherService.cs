@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using BookSoft.DAL.Exceptions;
 
 namespace Home.Services
 {
@@ -27,8 +28,9 @@ namespace Home.Services
                     var jsonString = JsonConvert.DeserializeObject<Weather>(response);
                     return jsonString;
                 }
+                throw new BadResponseException(responseMessage.IsSuccessStatusCode);
             }
-            throw new Exception();
+            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BookSoft.BLL.Authentications;
+﻿using Booking;
+using BookSoft.BLL.Authentications;
 using BookSoft.BLL.Regions;
 using BookSoft.DAL;
 using BookSoft.DAL.DataAccess;
@@ -56,6 +57,7 @@ namespace EtnaReception.Desktop
         {
             moduleCatalog.AddModule<MenuModule>();
             moduleCatalog.AddModule<HomeModule>();
+            moduleCatalog.AddModule<BookingModule>();       
         }
     }
 }
