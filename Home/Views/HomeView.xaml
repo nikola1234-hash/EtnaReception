@@ -16,9 +16,27 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock
-            Grid.Row="0"
-            FontSize="42"
-            Text="HOME VIEW" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Danas"/>
+                <Image Width="100" Height="100" />
+                <TextBlock Text="32 C" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Danas"/>
+                <Image Width="100" Height="100" />
+                <TextBlock Text="32 C" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Danas"/>
+                <Image Width="100" Height="100" />
+                <TextBlock Text="32 C" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Danas"/>
+                <Image Width="100" Height="100" />
+                <TextBlock Text="32 C" FontSize="24"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

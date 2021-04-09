@@ -1,5 +1,4 @@
-﻿
-using BookSoft.BLL.Regions;
+﻿using BookSoft.BLL.Regions;
 using Menu.Navigation;
 using Prism.Commands;
 using Prism.Mvvm;

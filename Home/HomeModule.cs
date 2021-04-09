@@ -1,4 +1,5 @@
 ﻿using BookSoft.BLL.Regions;
+using Home.Services;
 using Home.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -15,9 +16,11 @@ namespace Home
         {
             _regionManager = regionManager;
         }
-        public void OnInitialized(IContainerProvider containerProvider)
+        public async void OnInitialized(IContainerProvider containerProvider)
         {
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(HomeView));
+            WeatherService weather = new WeatherService();
+            await weather.GetWeatherForecast();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

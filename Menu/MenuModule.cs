@@ -24,7 +24,6 @@ namespace Menu
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<HomeView>();
-            containerRegistry.RegisterForNavigation<ReceptionView>();
         }
         
     }
