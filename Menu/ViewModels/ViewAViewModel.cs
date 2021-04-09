@@ -1,25 +1,36 @@
-﻿using Prism.Commands;
+﻿
+using BookSoft.BLL.Regions;
+using Menu.Navigation;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Menu.ViewModels
 {
     public class ViewAViewModel : BindableBase
     {
-        private string _message;
-        public string Message
+        private readonly IRegionManager _regionManager;
+        public DelegateCommand<object> NavigateCommand { get; }
+        public ViewAViewModel(IRegionManager regionManager)
         {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
+            _regionManager = regionManager;
+            NavigateCommand = new DelegateCommand<object>(ExecuteNavigate, CanNavigateExecute);
         }
 
-        public ViewAViewModel()
+        private bool CanNavigateExecute(object navigation)
         {
-            Message = "View A from your Prism Module";
+            return true;
+        }
+
+        private void ExecuteNavigate(object navigation)
+        {
+            if(navigation is NavigationType)
+            {
+                var view = (NavigationType)navigation;
+                _regionManager.RequestNavigate(RegionNames.MainRegion, view.ToString());
+            }
+            
         }
     }
 }

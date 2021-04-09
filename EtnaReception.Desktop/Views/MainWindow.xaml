@@ -9,6 +9,11 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     WindowState="Maximized">
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ContentControl Grid.Column="0" prism:RegionManager.RegionName="MenuRegion" />
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="MainRegion" />
     </Grid>
 </Window>

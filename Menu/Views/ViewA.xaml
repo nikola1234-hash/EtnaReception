@@ -1,16 +1,57 @@
-﻿<UserControl x:Class="Menu.Views.ViewA"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Menu.Views"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True" >
-    <Grid>
-        <TextBlock Text="{Binding Message}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-    </Grid>
+﻿<UserControl
+    x:Class="Menu.Views.ViewA"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Menu.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:nav="clr-namespace:Menu.Navigation"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <Border
+        Background="#364954"
+        BorderBrush="LightGray"
+        BorderThickness="1"
+        CornerRadius="25">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="27"
+                    Foreground="White"
+                    Text="Vila Etna" />
+
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <RadioButton
+                    Content="Pocetna"
+                    FontSize="24"
+                    Foreground="White"
+                    Command="{Binding NavigateCommand}"
+                    Style="{StaticResource MenuButtonTheme}" 
+                    CommandParameter="{x:Static nav:NavigationType.BookingView}"/>
+                <RadioButton
+                    Content="Recepcija"
+                    FontSize="24"
+                    Foreground="White"
+                    Style="{StaticResource MenuButtonTheme}" />
+                <RadioButton
+                    Content="Booking"
+                    FontSize="24"
+                    Foreground="White"
+                    Style="{StaticResource MenuButtonTheme}" />
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

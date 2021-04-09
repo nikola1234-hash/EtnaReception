@@ -4,7 +4,7 @@ namespace EtnaReception.Desktop.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "Prism Application";
+        private string _title = "Etna Reception";
         public string Title
         {
             get { return _title; }

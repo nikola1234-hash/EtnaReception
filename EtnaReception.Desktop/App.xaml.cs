@@ -1,11 +1,14 @@
-﻿using BookSoft.DAL;
+﻿using BookSoft.BLL.Authentications;
+using BookSoft.DAL;
 using BookSoft.DAL.DataAccess;
 using BookSoft.DAL.Services.Authentication;
 using BookSoft.Domain;
 using EtnaReception.Desktop.Views;
+using Menu;
 using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
+using Prism.Modularity;
 using System.IO;
 using System.Windows;
 
@@ -27,6 +30,9 @@ namespace EtnaReception.Desktop
             containerRegistry.Register<IUnitOfWork, UnitOfWork>();
             containerRegistry.Register<IDataService, DataService>();
             containerRegistry.Register<IPasswordHasher, PasswordHasher>();
+            containerRegistry.Register<IAuthenticator, Authenticator>();
+
+
             containerRegistry.RegisterInstance<IConfiguration>(new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -41,7 +47,11 @@ namespace EtnaReception.Desktop
             {
                 base.OnInitialized();
             }
-           
+        }
+    
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<MenuModule>();
         }
     }
 }

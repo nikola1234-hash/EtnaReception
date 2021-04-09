@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookSoft.DAL\BookSoft.DAL.csproj" />
     <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
   </ItemGroup>
 

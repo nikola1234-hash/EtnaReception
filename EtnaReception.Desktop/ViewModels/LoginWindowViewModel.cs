@@ -1,13 +1,11 @@
-﻿using BookSoft.DAL.Exceptions;
-using BookSoft.DAL.Services.Authentication;
+﻿using BookSoft.BLL.Authentications;
+using BookSoft.DAL.Exceptions;
 using EtnaReception.Desktop.Events;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using System;
-using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace EtnaReception.Desktop.ViewModels
@@ -16,15 +14,15 @@ namespace EtnaReception.Desktop.ViewModels
     {
         public DelegateCommand<object> LoginCommand { get; }
         public IRegionManager _regionManager;
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthenticator _authenticator;
         private readonly IEventAggregator _eventAggregator;
         public EventHandler SuccessfulLogin;
 
-        public LoginWindowViewModel(IAuthenticationService authenticationService,
+        public LoginWindowViewModel(IAuthenticator authenticator,
                                     IEventAggregator eventAggregator)
         {
             LoginCommand = new DelegateCommand<object>(OnLogin);
-            _authenticationService = authenticationService;
+            _authenticator = authenticator;
             ErrorMessageViewModel = new MessageViewModel();
             _eventAggregator = eventAggregator;
         }
@@ -35,7 +33,7 @@ namespace EtnaReception.Desktop.ViewModels
             var password = passwordBox as PasswordBox;
             try
             {
-                _authenticationService.Login(Username, password.Password);
+                _authenticator.Login(Username, password.Password);
                 _eventAggregator.GetEvent<LoginEvent>().Publish(true);
             }
             catch (UserNotFoundException)
