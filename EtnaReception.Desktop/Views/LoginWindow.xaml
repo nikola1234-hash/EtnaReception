@@ -11,6 +11,7 @@
     Height="450"
     prism:ViewModelLocator.AutoWireViewModel="True"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityCOnverter" />
@@ -86,7 +87,8 @@
                         HorizontalAlignment="Center"
                         Command="{Binding LoginCommand}"
                         CommandParameter="{Binding ElementName=passwordBox}"
-                        Content="Uloguj se" />
+                        Content="Uloguj se"
+                        IsDefault="True" />
                 </Grid>
             </StackPanel>
 

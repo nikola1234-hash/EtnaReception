@@ -6,5 +6,6 @@
 	[Email] varchar(255) null,
 	[Phone] varchar(255) null,
 	[Address] varchar(255) null,
-	[Details] text null
+	[Details] text null, 
+    [Jmbg] VARCHAR(255) NULL
 )

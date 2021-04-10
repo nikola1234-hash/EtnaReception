@@ -54,7 +54,7 @@ namespace EtnaReception.Desktop.ViewModels
         {
             set => ErrorMessageViewModel.Message = value;
         }
-        private string _username;
+        private string _username = "admin";
 
         public string Username
         {
