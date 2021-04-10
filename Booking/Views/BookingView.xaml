@@ -81,16 +81,19 @@
                 <StackPanel Margin="0,10" Orientation="Horizontal">
                     <StackPanel Margin="15,0" Orientation="Vertical">
                         <TextBlock Text="Broj ljudi:" />
-                        <TextBox Width="125" Text="" />
+                        <TextBox
+                            Width="135"
+                            Height="30"
+                            Text="" />
                     </StackPanel>
-                    <StackPanel Margin="30,0,0,0" Orientation="Vertical">
+                    <StackPanel Margin="15,0,0,0" Orientation="Vertical">
                         <TextBlock Text="Tip smestaja" />
-                        <ComboBox Width="125" />
+                        <ComboBox Width="135" />
                     </StackPanel>
                     <Button
                         Width="125"
-                        Height="30"
-                        Margin="25,0,0,0"
+                        Height="35"
+                        Margin="20,0,0,0"
                         VerticalAlignment="Bottom"
                         Content="Pretraga"
                         Style="{StaticResource RoundButton}" />
