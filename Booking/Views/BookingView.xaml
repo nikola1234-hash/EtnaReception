@@ -37,7 +37,7 @@
             Margin="20,0"
             Background="{StaticResource DateAreaColorBrush}"
             CornerRadius="25">
-            <Grid>
+            <Grid Margin="10" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition />
 

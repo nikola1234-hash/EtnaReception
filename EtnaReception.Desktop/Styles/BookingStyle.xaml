@@ -1,17 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
+    <!--  Colors  -->
     <Color x:Key="DateColor">#F28963</Color>
     <Color x:Key="DarkOrangeColor">#F25E5E</Color>
     <Color x:Key="WhiteColor">White</Color>
     <Color x:Key="GreyWhite">#F2F2F2</Color>
     <Color x:Key="OnMouseOverColor">#ADBCD9</Color>
 
+
+    <!--  Solid color brush  -->
     <SolidColorBrush x:Key="OnMouseOverBrush" Color="{StaticResource OnMouseOverColor}" />
     <SolidColorBrush x:Key="DateAreaColorBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="DateAreaShadowDrop" Color="{StaticResource GreyWhite}" />
     <SolidColorBrush x:Key="ButtonForegroundColor" Color="{StaticResource WhiteColor}" />
 
+
+    <!--  Button Style  -->
     <Style x:Key="RoundButton" TargetType="Button">
         <Setter Property="Background" Value="#6581A6" />
         <Setter Property="Foreground" Value="{StaticResource ButtonForegroundColor}" />
@@ -22,9 +27,7 @@
                         Background="{TemplateBinding Background}"
                         BorderThickness="1"
                         CornerRadius="15">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                            
-                        </ContentPresenter>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
