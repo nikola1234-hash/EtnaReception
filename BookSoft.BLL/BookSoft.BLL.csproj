@@ -10,7 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Validation\" />
     <Folder Include="Services\" />
+    <Folder Include="Wrappers\" />
   </ItemGroup>
 
 </Project>

@@ -15,9 +15,11 @@ namespace BookSoft.DAL
             _dataService = dataService;
             User = new UserRepository(_dataService);
             Company = new CompanyRepository(_dataService);
+            Room = new RoomRepository(_dataService);
         }
 
         public UserRepository User { get; }
         public CompanyRepository Company { get; }
+        public RoomRepository Room { get; }
     }
 }

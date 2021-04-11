@@ -7,14 +7,14 @@
     <Color x:Key="WhiteColor">White</Color>
     <Color x:Key="GreyWhite">#F2F2F2</Color>
     <Color x:Key="OnMouseOverColor">#ADBCD9</Color>
-
+    <Color x:Key="ValidationErrorColor">#ff3333</Color>
 
     <!--  Solid color brush  -->
     <SolidColorBrush x:Key="OnMouseOverBrush" Color="{StaticResource OnMouseOverColor}" />
     <SolidColorBrush x:Key="DateAreaColorBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="DateAreaShadowDrop" Color="{StaticResource GreyWhite}" />
     <SolidColorBrush x:Key="ButtonForegroundColor" Color="{StaticResource WhiteColor}" />
-
+    <SolidColorBrush x:Key="ValidationErrorColorBrush" Color="{StaticResource ValidationErrorColor}" />
 
     <!--  Button Style  -->
     <Style x:Key="RoundButton" TargetType="Button">
@@ -36,6 +36,29 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Background" Value="{StaticResource OnMouseOverBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <TextBlock
+                            Background="{StaticResource DateAreaColorBrush}"
+                            FontSize="12"
+                            Foreground="{StaticResource ValidationErrorColorBrush}"
+                            Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Background" Value="{StaticResource ValidationErrorColorBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>

@@ -1,21 +1,54 @@
 ﻿using Booking.Model;
+using Booking.Wrapper;
+using BookSoft.DAL;
 using BookSoft.Domain.Models;
+using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Booking.ViewModels
 {
     public class BookingViewModel : BindableBase
     {
-        private IEnumerable<Room> _rooms;
+        private readonly IUnitOfWork _unit;
+        private readonly IEventAggregator _eventAggregator;
+
+        private ObservableCollection<Room> _rooms;
         private int _selectedRoom;
-        private IEnumerable<StayType> _stayTypes;
+        private ObservableCollection<StayType> _stayTypes;
         private int _selectedStayType;
-        private IEnumerable<Guest> _guests;
+        private ObservableCollection<Guest> _guests;
         private int _selectedGuest;
+        private SearchWrapper _searchRooms;
+        public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator)
+        {
+            _unit = unit;
+            _eventAggregator = eventAggregator;
+            SearchCommand = new DelegateCommand(SearchExecute).ObservesProperty(() => SearchRooms.HasErrors);
+        }
 
 
+        private void SearchExecute()
+        {
+            var rooms = _unit.Room.GetAvailableRoomsForDates(SearchRooms.StartDate, SearchRooms.EndDate, SearchRooms.NumberOfPeople);
+            Rooms = new ObservableCollection<Room>((List<Room>)rooms);
+            
+        }
 
+        public SearchWrapper SearchRooms
+        {
+            get { return _searchRooms; }
+            set
+            {
+                _searchRooms = value;
+                SetProperty(ref _searchRooms, value);
+
+            }
+        }
 
 
 
@@ -29,7 +62,7 @@ namespace Booking.ViewModels
                 SetProperty(ref _selectedGuest, value);
             }
         }
-        public IEnumerable<Guest> Guests
+        public ObservableCollection<Guest> Guests
         {
             get { return _guests; }
             set
@@ -47,7 +80,7 @@ namespace Booking.ViewModels
                 SetProperty(ref _selectedStayType, value);
             }
         }
-        public IEnumerable<StayType> StayTypes
+        public ObservableCollection<StayType> StayTypes
         {
             get { return _stayTypes; }
             set
@@ -65,7 +98,7 @@ namespace Booking.ViewModels
                 SetProperty(ref _selectedRoom, value);
             }
         }
-        public IEnumerable<Room> Rooms
+        public ObservableCollection<Room> Rooms
         {
             get { return _rooms; }
             set 
@@ -75,7 +108,18 @@ namespace Booking.ViewModels
             }
         }
 
+        private bool _isGuestDetailsVisible;
 
+        public bool IsGuestDetailsVisible
+        {
+            get { return _isGuestDetailsVisible; }
+            set 
+            {
+                _isGuestDetailsVisible = value;
+            }
+        }
+
+        public ICommand SearchCommand { get; }
 
 
     }

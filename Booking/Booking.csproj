@@ -10,4 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BookSoft.BLL\BookSoft.BLL.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
 </Project>
