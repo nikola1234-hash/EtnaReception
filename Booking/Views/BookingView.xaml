@@ -70,13 +70,12 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="15,0" Orientation="Vertical">
                         <TextBlock Text="Od:" />
-                        <DatePicker SelectedDate="{Binding StartDate}" />
+                        <DatePicker SelectedDate="{Binding Path=SearchRooms.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                     </StackPanel>
                     <StackPanel Margin="15,0" Orientation="Vertical">
                         <TextBlock Text="Do:" />
-                        <DatePicker SelectedDate="{Binding EndDate}" />
+                        <DatePicker SelectedDate="{Binding SearchRooms.EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                     </StackPanel>
-
                 </StackPanel>
                 <StackPanel Margin="0,10" Orientation="Horizontal">
                     <StackPanel Margin="15,0" Orientation="Vertical">
@@ -84,7 +83,7 @@
                         <TextBox
                             Width="135"
                             Height="30"
-                            Text="" />
+                            Text="{Binding SearchRooms.NumberOfPeople, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                     </StackPanel>
                     <StackPanel Margin="15,0,0,0" Orientation="Vertical">
                         <TextBlock Text="Tip smestaja" />
@@ -184,25 +183,25 @@
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
-                                    Margin="10"
-                                    FontSize="15"
-                                    Text="Soba broj:" />
+                                        Margin="10"
+                                        FontSize="15"
+                                        Text="Soba broj:" />
                                     <TextBlock
-                                    HorizontalAlignment="Center"
-                                    FontSize="24"
-                                    FontWeight="DemiBold"
-                                    Text="{Binding RoomNumber}" />
+                                        HorizontalAlignment="Center"
+                                        FontSize="24"
+                                        FontWeight="DemiBold"
+                                        Text="{Binding RoomNumber}" />
                                 </StackPanel>
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                     <TextBlock
-                                    Margin="10"
-                                    FontSize="15"
-                                    Text="Kapacitet sobe:" />
+                                        Margin="10"
+                                        FontSize="15"
+                                        Text="Kapacitet sobe:" />
                                     <TextBlock
-                                    HorizontalAlignment="Right"
-                                    FontSize="18"
-                                    FontWeight="Regular"
-                                    Text="{Binding Capacity}" />
+                                        HorizontalAlignment="Right"
+                                        FontSize="18"
+                                        FontWeight="Regular"
+                                        Text="{Binding Capacity}" />
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

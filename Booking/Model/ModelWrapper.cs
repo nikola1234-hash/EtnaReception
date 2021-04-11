@@ -7,20 +7,9 @@ using System.Linq;
 
 namespace Booking.Model
 {
-    public class ModelWrapper<T> : BindableBase, INotifyDataErrorInfo
+    public class ModelWrapper : BindableBase, INotifyDataErrorInfo
     {
         private Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
-
-        public ModelWrapper(T model)
-        {
-            if(model is null)
-            {
-                throw new ArgumentNullException("model");
-            }
-            Model = model;
-        }
-
-        public T Model { get; private set; }
 
         private void OnErrorsChanged(string propertyName)
         {

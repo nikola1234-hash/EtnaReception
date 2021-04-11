@@ -1,4 +1,5 @@
-﻿using Booking.Model;
+﻿using Booking.Events;
+using Booking.Model;
 using Booking.Wrapper;
 using BookSoft.DAL;
 using BookSoft.Domain.Models;
@@ -28,9 +29,26 @@ namespace Booking.ViewModels
         {
             _unit = unit;
             _eventAggregator = eventAggregator;
-            SearchCommand = new DelegateCommand(SearchExecute).ObservesProperty(() => SearchRooms.HasErrors);
+            SearchCommand = new DelegateCommand(SearchExecute).ObservesProperty(() => AnyErrors);
+            _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
+        }
+        private DateTime _testDate;
+
+        public DateTime TestDate
+        {
+            get { return _testDate; }
+            set 
+            {
+                SetProperty(ref _testDate, value);
+            }
         }
 
+        private void OnLoadEvent()
+        {
+
+            //StayTypes Load
+            
+        }
 
         private void SearchExecute()
         {
@@ -41,13 +59,8 @@ namespace Booking.ViewModels
 
         public SearchWrapper SearchRooms
         {
-            get { return _searchRooms; }
-            set
-            {
-                _searchRooms = value;
-                SetProperty(ref _searchRooms, value);
-
-            }
+            get => _searchRooms;
+            set => SetProperty(ref _searchRooms, value);
         }
 
 
@@ -107,18 +120,17 @@ namespace Booking.ViewModels
                 SetProperty(ref _rooms, value);
             }
         }
+        private bool _anyErrors;
 
-        private bool _isGuestDetailsVisible;
-
-        public bool IsGuestDetailsVisible
+        public bool AnyErrors
         {
-            get { return _isGuestDetailsVisible; }
+            get => SearchRooms.HasErrors;
             set 
             {
-                _isGuestDetailsVisible = value;
+                _anyErrors = value;
+                SetProperty(ref _anyErrors, value);
             }
         }
-
         public ICommand SearchCommand { get; }
 
 

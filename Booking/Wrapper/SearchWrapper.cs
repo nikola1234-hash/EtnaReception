@@ -3,25 +3,27 @@ using System;
 
 namespace Booking.Wrapper
 {
-    public class SearchWrapper : ModelWrapper<Search>
+    public class SearchWrapper : ModelWrapper
     {
-        public SearchWrapper(Search model) : base(model)
-        {
+        private DateTime _testDate;
 
-        }
-
-        public DateTime StartDate
+        public DateTime TestDate
         {
-            get { return Model.StartDate; }
+            get { return _testDate; }
             set
             {
-                if (!Equals(Model.StartDate, value))
-                {
-                    Model.StartDate = value;
-                    Validation(nameof(StartDate));
-                    RaisePropertyChanged(nameof(StartDate));
-                    
-                }
+                SetProperty(ref _testDate, value);
+            }
+        }
+
+        private DateTime _startDate;
+        public DateTime StartDate
+        {
+            get { return _startDate; }
+            set
+            {
+                SetProperty(ref _startDate, value);
+                Validation(nameof(StartDate));
             }
         }
 
@@ -48,41 +50,34 @@ namespace Booking.Wrapper
                 AddErrors(propertyName, "Broj osoba mora biti veci od nula!");
             }
         }
-
+        private DateTime _endDate;
         public DateTime EndDate
         {
-            get { return Model.EndDate; }
+            get { return _endDate; }
             set
             {
-                if(!Equals(Model.EndDate, value))
-                {
-                    Model.EndDate = value;
-                    RaisePropertyChanged(nameof(EndDate));
-                }
+                SetProperty(ref _endDate, value);
+                Validation(nameof(EndDate));
+             
             }
         }
+        private int _numberOfPeople;
         public int NumberOfPeople
         {
-            get { return Model.NumberOfPeople; }
+            get { return _numberOfPeople; }
             set
             {
-                if(!Equals(Model.NumberOfPeople, value))
-                {
-                    Model.NumberOfPeople = value;
-                    RaisePropertyChanged(nameof(NumberOfPeople));
-                }
+                SetProperty(ref _numberOfPeople, value);
+                Validation(nameof(NumberOfPeople));
             }
         }
+        private int _selectedType;
         public int SelectedType
         {
-            get { return Model.SelectedType; }
+            get { return _selectedType; }
             set
             {
-                if(!Equals(Model.SelectedType, value))
-                {
-                    Model.SelectedType = value;
-                    RaisePropertyChanged(nameof(SelectedType));
-                }
+                SetProperty(ref _selectedType, value);
             }
         }
     }
