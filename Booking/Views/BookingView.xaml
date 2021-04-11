@@ -6,8 +6,6 @@
     xmlns:local="clr-namespace:Booking.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
-    d:DesignHeight="450"
-    d:DesignWidth="1200"
     prism:ViewModelLocator.AutoWireViewModel="True"
     FontSize="18"
     mc:Ignorable="d">
@@ -22,6 +20,7 @@
             <RowDefinition Height="55" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock
@@ -110,17 +109,56 @@
         </Border>
         <Border
             Grid.Row="2"
+            Grid.RowSpan="2"
             Grid.Column="0"
             Margin="20,20,20,0"
             Background="{StaticResource DateAreaColorBrush}"
             CornerRadius="25">
-
-            <!--<StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Tip smestaja" />
-                    <ComboBox />
-                </StackPanel>-->
-            <!--</StackPanel>-->
+            <StackPanel Orientation="Vertical">
+                <StackPanel Margin="20" Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Ime:" />
+                        <TextBox Width="125" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                        <TextBlock Text="Prezime:" />
+                        <TextBox Width="125" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                        <TextBlock Text="Telefon:" />
+                        <TextBox Width="170" Text="" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,20" Orientation="Horizontal">
+                    <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                        <TextBlock Text="Adresa:" />
+                        <TextBox Width="270" Text="" />
+                    </StackPanel>
+                    <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                        <TextBlock Text="Jmbg:" />
+                        <TextBox Width="170" Text="" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,20" Orientation="Horizontal">
+                    <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                        <TextBlock Text="Email:" />
+                        <TextBox Width="270" Text="" />
+                    </StackPanel>
+                    <Button
+                        Width="150"
+                        Height="30"
+                        Margin="20,0,0,0"
+                        VerticalAlignment="Bottom"
+                        Content="Rezervisi"
+                        Style="{StaticResource RoundButton}" />
+                </StackPanel>
+                <StackPanel Margin="0,0,0,20" Orientation="Horizontal">
+                    <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                        <TextBlock Text="Napomena:" />
+                        <RichTextBox Width="270" Height="60" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
             <Border.Effect>
                 <DropShadowEffect
                     BlurRadius="15"
