@@ -11,11 +11,33 @@ namespace Booking.ViewModels
         private int _selectedRoom;
         private IEnumerable<StayType> _stayTypes;
         private int _selectedStayType;
+        private IEnumerable<Guest> _guests;
+        private int _selectedGuest;
 
 
 
 
 
+
+
+        public int SelectedGuest
+        {
+            get { return _selectedGuest; }
+            set
+            {
+                _selectedGuest = value;
+                SetProperty(ref _selectedGuest, value);
+            }
+        }
+        public IEnumerable<Guest> Guests
+        {
+            get { return _guests; }
+            set
+            {
+                _guests = value;
+                SetProperty(ref _guests, value);
+            }
+        }
         public int SelectedStayType
         {
             get { return _selectedStayType; }

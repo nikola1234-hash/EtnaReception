@@ -175,10 +175,36 @@
             CornerRadius="10"
             Visibility="Visible">
             <Grid Margin="10">
-                <ListView Width="250">
+                <ListView
+                    Width="250"
+                    ItemsSource="{Binding Rooms}"
+                    SelectedItem="{Binding SelectedRoom}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel />
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                    Margin="10"
+                                    FontSize="15"
+                                    Text="Soba broj:" />
+                                    <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="24"
+                                    FontWeight="DemiBold"
+                                    Text="{Binding RoomNumber}" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                    Margin="10"
+                                    FontSize="15"
+                                    Text="Kapacitet sobe:" />
+                                    <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="18"
+                                    FontWeight="Regular"
+                                    Text="{Binding Capacity}" />
+                                </StackPanel>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -186,6 +212,39 @@
             <Border.Effect>
                 <DropShadowEffect
                     BlurRadius="20"
+                    ShadowDepth="0"
+                    Color="{StaticResource GreyWhite}" />
+            </Border.Effect>
+        </Border>
+        <Border
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Grid.ColumnSpan="1"
+            Margin="20,40,20,10"
+            Background="{StaticResource DateAreaColorBrush}"
+            CornerRadius="20">
+            <Grid Margin="10">
+                <ListView ItemsSource="{Binding Guests}" SelectedItem="{Binding SelectedGuest}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding FirstName}" />
+                                    <TextBlock Text="{Binding LastName}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Address}" />
+                                    <TextBlock Text="{Binding Email}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="15"
                     ShadowDepth="0"
                     Color="{StaticResource GreyWhite}" />
             </Border.Effect>
