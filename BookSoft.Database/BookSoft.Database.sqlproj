@@ -61,6 +61,7 @@
     <Folder Include="dbo\StoredProcedures\Company" />
     <Folder Include="dbo\StoredProcedures\User" />
     <Folder Include="dbo\StoredProcedures\Rooms" />
+    <Folder Include="dbo\StoredProcedures\StayType" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Company.sql" />
@@ -88,6 +89,8 @@
     <Build Include="dbo\StoredProcedures\User\spUser_InsertUser.sql" />
     <Build Include="dbo\StoredProcedures\User\spUser_SetActiveStatus.sql" />
     <Build Include="dbo\StoredProcedures\Rooms\spRooms_GetAvailableRoomsByDates.sql" />
+    <Build Include="dbo\StoredProcedures\StayType\spStayType_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\StayType\spStayType_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BookSoft.Database.refactorlog" />

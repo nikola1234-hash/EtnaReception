@@ -7,5 +7,6 @@ namespace BookSoft.DAL
         UserRepository User { get; }
         CompanyRepository Company { get; }
         RoomRepository Room { get; }
+        StayTypesRepository StayType { get; }
     }
 }

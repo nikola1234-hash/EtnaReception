@@ -5,18 +5,8 @@ namespace Booking.Wrapper
 {
     public class SearchWrapper : ModelWrapper
     {
-        private DateTime _testDate;
 
-        public DateTime TestDate
-        {
-            get { return _testDate; }
-            set
-            {
-                SetProperty(ref _testDate, value);
-            }
-        }
-
-        private DateTime _startDate;
+        private DateTime _startDate = DateTime.Now.Date;
         public DateTime StartDate
         {
             get { return _startDate; }
@@ -50,7 +40,7 @@ namespace Booking.Wrapper
                 AddErrors(propertyName, "Broj osoba mora biti veci od nula!");
             }
         }
-        private DateTime _endDate;
+        private DateTime _endDate = DateTime.Now.Date.AddDays(2);
         public DateTime EndDate
         {
             get { return _endDate; }

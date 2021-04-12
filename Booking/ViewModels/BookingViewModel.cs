@@ -21,7 +21,7 @@ namespace Booking.ViewModels
         private ObservableCollection<Room> _rooms;
         private int _selectedRoom;
         private ObservableCollection<StayType> _stayTypes;
-        private int _selectedStayType;
+        private StayType _selectedStayType;
         private ObservableCollection<Guest> _guests;
         private int _selectedGuest;
         private SearchWrapper _searchRooms;
@@ -47,7 +47,8 @@ namespace Booking.ViewModels
         {
             SearchRooms = new SearchWrapper();
             //StayTypes Load
-            
+            var types = _unit.StayType.GetAll();
+            StayTypes = new ObservableCollection<StayType>(types);
         }
 
         private void SearchExecute()
@@ -84,12 +85,11 @@ namespace Booking.ViewModels
                 SetProperty(ref _guests, value);
             }
         }
-        public int SelectedStayType
+        public StayType SelectedStayType
         {
             get { return _selectedStayType; }
             set
             {
-                _selectedStayType = value;
                 SetProperty(ref _selectedStayType, value);
             }
         }

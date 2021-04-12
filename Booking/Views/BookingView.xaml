@@ -5,7 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Booking.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:prism="http://prismlibrary.com/" xmlns:viewmodels="clr-namespace:Booking.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:BookingViewModel}"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:Booking.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:BookingViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     FontSize="18"
     mc:Ignorable="d">
@@ -87,7 +89,10 @@
                     </StackPanel>
                     <StackPanel Margin="15,0,0,0" Orientation="Vertical">
                         <TextBlock Text="Tip smestaja" />
-                        <ComboBox Width="135" />
+                        <ComboBox
+                            Width="135"
+                            ItemsSource="{Binding StayTypes, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding SelectedStayType, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <Button
                         Width="125"
