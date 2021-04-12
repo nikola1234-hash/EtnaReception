@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Booking.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:prism="http://prismlibrary.com/"
+    xmlns:prism="http://prismlibrary.com/" xmlns:viewmodels="clr-namespace:Booking.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:BookingViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     FontSize="18"
     mc:Ignorable="d">
@@ -70,7 +70,7 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="15,0" Orientation="Vertical">
                         <TextBlock Text="Od:" />
-                        <DatePicker SelectedDate="{Binding Path=SearchRooms.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        <DatePicker SelectedDate="{Binding SearchRooms.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                     </StackPanel>
                     <StackPanel Margin="15,0" Orientation="Vertical">
                         <TextBlock Text="Do:" />

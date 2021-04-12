@@ -45,7 +45,7 @@ namespace Booking.ViewModels
 
         private void OnLoadEvent()
         {
-
+            SearchRooms = new SearchWrapper();
             //StayTypes Load
             
         }
