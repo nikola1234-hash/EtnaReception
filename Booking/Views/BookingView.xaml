@@ -183,7 +183,7 @@
             <Grid Margin="10">
                 <ListView
                     Width="250"
-                    ItemsSource="{Binding Rooms}"
+                    ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectedItem="{Binding SelectedRoom}">
                     <ListView.ItemTemplate>
                         <DataTemplate>

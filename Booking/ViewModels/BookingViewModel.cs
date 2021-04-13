@@ -18,13 +18,14 @@ namespace Booking.ViewModels
         private readonly IUnitOfWork _unit;
         private readonly IEventAggregator _eventAggregator;
 
-        private ObservableCollection<Room> _rooms;
-        private int _selectedRoom;
+        private ObservableCollection<AvailableRoomRequest> _rooms;
+        private AvailableRoomRequest _selectedRoom;
         private IEnumerable<StayType> _stayTypes;
         private StayType _selectedStayType;
         private ObservableCollection<Guest> _guests;
         private int _selectedGuest;
         private SearchWrapper _searchRooms;
+
         public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator)
         {
             _unit = unit;
@@ -32,28 +33,17 @@ namespace Booking.ViewModels
             SearchCommand = new DelegateCommand(SearchExecute).ObservesProperty(() => AnyErrors);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
         }
-        private DateTime _testDate;
-
-        public DateTime TestDate
-        {
-            get { return _testDate; }
-            set 
-            {
-                SetProperty(ref _testDate, value);
-            }
-        }
 
         private void OnLoadEvent()
         {
             SearchRooms = new SearchWrapper();
-            //StayTypes Load
             StayTypes= _unit.StayType.GetAll();
         }
 
         private void SearchExecute()
         {
             var rooms = _unit.Room.GetAvailableRoomsForDates(SearchRooms.StartDate, SearchRooms.EndDate, SearchRooms.NumberOfPeople);
-            Rooms = new ObservableCollection<Room>((List<Room>)rooms);
+            Rooms = new ObservableCollection<AvailableRoomRequest>(rooms);
             
         }
 
@@ -100,7 +90,7 @@ namespace Booking.ViewModels
                 SetProperty(ref _stayTypes, value);
             }
         }
-        public int SelectedRoom
+        public AvailableRoomRequest SelectedRoom
         {
             get { return _selectedRoom; }
             set 
@@ -109,7 +99,7 @@ namespace Booking.ViewModels
                 SetProperty(ref _selectedRoom, value);
             }
         }
-        public ObservableCollection<Room> Rooms
+        public ObservableCollection<AvailableRoomRequest> Rooms
         {
             get { return _rooms; }
             set 
