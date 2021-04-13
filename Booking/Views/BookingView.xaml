@@ -91,14 +91,16 @@
                         <TextBlock Text="Tip smestaja" />
                         <ComboBox
                             Width="135"
+                            DisplayMemberPath="Title"
                             ItemsSource="{Binding StayTypes, UpdateSourceTrigger=PropertyChanged}"
-                            SelectedItem="{Binding SelectedStayType, UpdateSourceTrigger=PropertyChanged}" />
+                            SelectedItem="{Binding SelectedStayType}" />
                     </StackPanel>
                     <Button
                         Width="125"
                         Height="35"
                         Margin="20,0,0,0"
                         VerticalAlignment="Bottom"
+                        Command="{Binding SearchCommand}"
                         Content="Pretraga"
                         Style="{StaticResource RoundButton}" />
                 </StackPanel>
