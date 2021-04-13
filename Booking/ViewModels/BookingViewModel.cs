@@ -29,14 +29,20 @@ namespace Booking.ViewModels
         public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator)
         {
             _unit = unit;
+            SearchRooms = new SearchWrapper();
             _eventAggregator = eventAggregator;
-            SearchCommand = new DelegateCommand(SearchExecute).ObservesProperty(() => AnyErrors);
+            SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
+        }
+
+        private bool CanSearchExecute()
+        {
+            return SearchRooms.IsEnabled;
         }
 
         private void OnLoadEvent()
         {
-            SearchRooms = new SearchWrapper();
+
             StayTypes= _unit.StayType.GetAll();
         }
 
@@ -46,6 +52,17 @@ namespace Booking.ViewModels
             Rooms = new ObservableCollection<AvailableRoomRequest>(rooms);
             
         }
+
+        public bool CanExecute
+        {
+            get { return SearchRooms.HasErrors == false; }
+            set
+            {
+                CanExecute = value;
+                RaisePropertyChanged(nameof(CanExecute));
+            }
+        }
+
 
         public SearchWrapper SearchRooms
         {
@@ -61,7 +78,6 @@ namespace Booking.ViewModels
             get { return _selectedGuest; }
             set
             {
-                _selectedGuest = value;
                 SetProperty(ref _selectedGuest, value);
             }
         }
@@ -70,7 +86,6 @@ namespace Booking.ViewModels
             get { return _guests; }
             set
             {
-                _guests = value;
                 SetProperty(ref _guests, value);
             }
         }
@@ -95,7 +110,6 @@ namespace Booking.ViewModels
             get { return _selectedRoom; }
             set 
             { 
-                _selectedRoom = value;
                 SetProperty(ref _selectedRoom, value);
             }
         }
@@ -104,21 +118,11 @@ namespace Booking.ViewModels
             get { return _rooms; }
             set 
             { 
-                _rooms = value;
                 SetProperty(ref _rooms, value);
             }
         }
-        private bool _anyErrors;
 
-        public bool AnyErrors
-        {
-            get => SearchRooms.HasErrors;
-            set 
-            {
-                _anyErrors = value;
-                SetProperty(ref _anyErrors, value);
-            }
-        }
+
         public ICommand SearchCommand { get; }
 
 

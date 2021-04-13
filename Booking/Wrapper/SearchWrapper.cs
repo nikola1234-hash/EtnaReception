@@ -14,7 +14,14 @@ namespace Booking.Wrapper
             {
                 SetProperty(ref _startDate, value);
                 Validation(nameof(StartDate));
+                RaisePropertyChanged(nameof(HasErrors));
+                RaiseEnabledButton();
             }
+        }
+
+        private void RaiseEnabledButton()
+        {
+            IsEnabled = !HasErrors;
         }
 
         private void Validation(string propertyName)
@@ -48,7 +55,9 @@ namespace Booking.Wrapper
             {
                 SetProperty(ref _endDate, value);
                 Validation(nameof(EndDate));
-             
+                RaisePropertyChanged(nameof(HasErrors));
+                RaiseEnabledButton();
+
             }
         }
         private int _numberOfPeople;
@@ -59,16 +68,22 @@ namespace Booking.Wrapper
             {
                 SetProperty(ref _numberOfPeople, value);
                 Validation(nameof(NumberOfPeople));
+                RaisePropertyChanged(nameof(HasErrors));
+                RaiseEnabledButton();
             }
         }
-        private int _selectedType;
-        public int SelectedType
+
+
+        private bool _isEnabled;
+
+        public bool IsEnabled
         {
-            get { return _selectedType; }
+            get { return _isEnabled; }
             set
             {
-                SetProperty(ref _selectedType, value);
+                SetProperty(ref _isEnabled, value);
             }
         }
+
     }
 }

@@ -16,7 +16,16 @@ namespace Booking.Model
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        public bool HasErrors => _errorsByPropertyName.Any();
+
+
+        public bool HasErrors
+        {
+            get { return _errorsByPropertyName.Any(); }
+            set
+            {
+                RaisePropertyChanged(nameof(HasErrors));
+            }
+        }
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 

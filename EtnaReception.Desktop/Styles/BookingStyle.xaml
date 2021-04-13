@@ -37,6 +37,9 @@
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Background" Value="{StaticResource OnMouseOverBrush}" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource DateAreaShadowDrop}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -60,6 +63,7 @@
             <Trigger Property="Validation.HasError" Value="True">
                 <Setter Property="Background" Value="{StaticResource ValidationErrorColorBrush}" />
             </Trigger>
+
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
