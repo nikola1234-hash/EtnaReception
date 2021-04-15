@@ -1,4 +1,5 @@
 ﻿using Booking.Events;
+using Booking.Mediator;
 using Booking.Model;
 using Booking.Wrapper;
 using BookSoft.DAL;
@@ -33,6 +34,12 @@ namespace Booking.ViewModels
             _eventAggregator = eventAggregator;
             SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
+            Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
+        }
+
+        private void BookingViewModel_StayTypeChanged(object sender, TypeChangedEventArgs e)
+        {
+            
         }
 
         private bool CanSearchExecute()
@@ -48,7 +55,8 @@ namespace Booking.ViewModels
 
         private void SearchExecute()
         {
-            var rooms = _unit.Room.GetAvailableRoomsForDates(SearchRooms.StartDate, SearchRooms.EndDate, SearchRooms.NumberOfPeople);
+            var rooms = _unit.Room
+                 .GetAvailableRoomsForDates(SearchRooms.StartDate, SearchRooms.EndDate, SearchRooms.NumberOfPeople);
             Rooms = new ObservableCollection<AvailableRoomRequest>(rooms);
             
         }
@@ -95,6 +103,10 @@ namespace Booking.ViewModels
             set
             {
                 SetProperty(ref _selectedStayType, value);
+                if(_selectedStayType != null)
+                {
+                    Calculation.GetInstance().OnStayTypeChanged(this, SelectedStayType);
+                }
             }
         }
         public IEnumerable<StayType> StayTypes
@@ -124,7 +136,5 @@ namespace Booking.ViewModels
 
 
         public ICommand SearchCommand { get; }
-
-
     }
 }

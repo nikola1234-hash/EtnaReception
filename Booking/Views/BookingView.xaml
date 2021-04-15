@@ -45,11 +45,11 @@
 
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-                    <TextBlock Margin="0,5,0,10" Text="Jedinicna cena:" />
+                    <TextBlock Margin="0,5,0,10" Text="Broj dana:" />
                     <TextBox IsEnabled="False" />
                     <TextBlock Margin="0,5,0,10" Text="Jedinicna cena:" />
                     <TextBox IsEnabled="False" />
-                    <TextBlock Margin="0,5,0,10" Text="Jedinicna cena:" />
+                    <TextBlock Margin="0,5,0,10" Text="Ukupno cena:" />
                     <TextBox Margin="0,0,0,10" IsEnabled="False" />
 
                 </StackPanel>
@@ -68,43 +68,50 @@
             Margin="20,0"
             Background="{StaticResource DateAreaColorBrush}"
             CornerRadius="25">
-            <StackPanel Margin="25" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Margin="15,0" Orientation="Vertical">
-                        <TextBlock Text="Od:" />
-                        <DatePicker SelectedDate="{Binding SearchRooms.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FirstGroup" />
+                    <ColumnDefinition Width="auto" SharedSizeGroup="SecondGroup" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="25" Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="15,0" Orientation="Vertical">
+                            <TextBlock Text="Od:" />
+                            <DatePicker MaxWidth="135" SelectedDate="{Binding SearchRooms.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </StackPanel>
+                        <StackPanel Margin="15,0" Orientation="Vertical">
+                            <TextBlock Text="Do:" />
+                            <DatePicker MaxWidth="135" SelectedDate="{Binding SearchRooms.EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </StackPanel>
+                        <Button
+                            Width="125"
+                            Height="35"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding SearchCommand}"
+                            Content="Pretraga"
+                            Style="{StaticResource RoundButton}" />
                     </StackPanel>
-                    <StackPanel Margin="15,0" Orientation="Vertical">
-                        <TextBlock Text="Do:" />
-                        <DatePicker SelectedDate="{Binding SearchRooms.EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                    <StackPanel Margin="0,10" Orientation="Horizontal">
+                        <StackPanel Margin="15,0" Orientation="Vertical">
+                            <TextBlock Text="Broj ljudi:" />
+                            <TextBox
+                                Width="135"
+                                Height="30"
+                                Text="{Binding SearchRooms.NumberOfPeople, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                        </StackPanel>
+                        <StackPanel Margin="15,0,0,0" Orientation="Vertical">
+                            <TextBlock Text="Tip smestaja" />
+                            <ComboBox
+                                Width="205"
+                                DisplayMemberPath="Title"
+                                ItemsSource="{Binding StayTypes, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedItem="{Binding SelectedStayType}" />
+                        </StackPanel>
+
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Margin="0,10" Orientation="Horizontal">
-                    <StackPanel Margin="15,0" Orientation="Vertical">
-                        <TextBlock Text="Broj ljudi:" />
-                        <TextBox
-                            Width="135"
-                            Height="30"
-                            Text="{Binding SearchRooms.NumberOfPeople, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
-                    </StackPanel>
-                    <StackPanel Margin="15,0,0,0" Orientation="Vertical">
-                        <TextBlock Text="Tip smestaja" />
-                        <ComboBox
-                            Width="135"
-                            DisplayMemberPath="Title"
-                            ItemsSource="{Binding StayTypes, UpdateSourceTrigger=PropertyChanged}"
-                            SelectedItem="{Binding SelectedStayType}" />
-                    </StackPanel>
-                    <Button
-                        Width="125"
-                        Height="35"
-                        Margin="20,0,0,0"
-                        VerticalAlignment="Bottom"
-                        Command="{Binding SearchCommand}"
-                        Content="Pretraga"
-                        Style="{StaticResource RoundButton}" />
-                </StackPanel>
-            </StackPanel>
+            </Grid>
             <Border.Effect>
                 <DropShadowEffect
                     BlurRadius="15"

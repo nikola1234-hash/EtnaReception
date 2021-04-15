@@ -1,8 +1,5 @@
 ﻿using BookSoft.DAL.Repositories;
 using BookSoft.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BookSoft.DAL
 {
@@ -22,7 +19,6 @@ namespace BookSoft.DAL
         public UserRepository User { get; }
         public CompanyRepository Company { get; }
         public RoomRepository Room { get; }
-
         public StayTypesRepository StayType { get; }
     }
 }
