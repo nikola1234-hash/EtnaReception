@@ -5,6 +5,7 @@ namespace Booking.Wrapper
 {
     public class SearchWrapper : ModelWrapper
     {
+        public event Action StateChanged;
 
         private DateTime _startDate = DateTime.Now.Date;
         public DateTime StartDate
@@ -16,9 +17,13 @@ namespace Booking.Wrapper
                 Validation(nameof(StartDate));
                 RaisePropertyChanged(nameof(HasErrors));
                 RaiseEnabledButton();
+                OnStateChange();
             }
         }
-
+        private void OnStateChange()
+        {
+            StateChanged?.Invoke();
+        }
         private void RaiseEnabledButton()
         {
             IsEnabled = !HasErrors;
@@ -57,7 +62,7 @@ namespace Booking.Wrapper
                 Validation(nameof(EndDate));
                 RaisePropertyChanged(nameof(HasErrors));
                 RaiseEnabledButton();
-
+                OnStateChange();
             }
         }
         private int _numberOfPeople;
@@ -70,6 +75,7 @@ namespace Booking.Wrapper
                 Validation(nameof(NumberOfPeople));
                 RaisePropertyChanged(nameof(HasErrors));
                 RaiseEnabledButton();
+                OnStateChange();
             }
         }
 

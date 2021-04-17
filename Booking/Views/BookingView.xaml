@@ -46,11 +46,14 @@
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
                     <TextBlock Margin="0,5,0,10" Text="Broj dana:" />
-                    <TextBox IsEnabled="False" />
+                    <TextBox IsEnabled="False" Text="{Binding Days, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Margin="0,5,0,10" Text="Jedinicna cena:" />
-                    <TextBox IsEnabled="False" />
+                    <TextBox IsEnabled="False" Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Margin="0,5,0,10" Text="Ukupno cena:" />
-                    <TextBox Margin="0,0,0,10" IsEnabled="False" />
+                    <TextBox
+                        Margin="0,0,0,10"
+                        IsEnabled="False"
+                        Text="{Binding TotalPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 </StackPanel>
             </Grid>
@@ -105,8 +108,8 @@
                             <ComboBox
                                 Width="205"
                                 DisplayMemberPath="Title"
-                                ItemsSource="{Binding StayTypes, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedItem="{Binding SelectedStayType}" />
+                                ItemsSource="{Binding StayTypes}"
+                                SelectedItem="{Binding SelectedStayType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                     </StackPanel>

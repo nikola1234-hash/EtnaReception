@@ -2,6 +2,7 @@
 using Booking.Mediator;
 using Booking.Model;
 using Booking.Wrapper;
+using BookSoft.BLL;
 using BookSoft.DAL;
 using BookSoft.Domain.Models;
 using Prism.Commands;
@@ -18,6 +19,7 @@ namespace Booking.ViewModels
     {
         private readonly IUnitOfWork _unit;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IBookingCalculate _calculationService;
 
         private ObservableCollection<AvailableRoomRequest> _rooms;
         private AvailableRoomRequest _selectedRoom;
@@ -27,19 +29,60 @@ namespace Booking.ViewModels
         private int _selectedGuest;
         private SearchWrapper _searchRooms;
 
-        public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator)
+        public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator,
+                                IBookingCalculate calculationService)
         {
             _unit = unit;
+            _calculationService = calculationService;
             SearchRooms = new SearchWrapper();
+            SearchRooms.StateChanged += SearchRooms_StateChanged;
             _eventAggregator = eventAggregator;
             SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
             Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
         }
 
+        private void SearchRooms_StateChanged()
+        {
+            PopulateDetailsPreview();
+        }
+
+        // Booking Details preview area.
+        private decimal _price;
+        public decimal Price
+        {
+            get { return _price; }
+            set { SetProperty(ref _price, value); }
+        }
+        private int _days;
+        public int Days
+        {
+            get { return _days; }
+            set { SetProperty(ref _days, value); }
+        }
+        private decimal _totalPrice;
+        public decimal TotalPrice
+        {
+            get { return _totalPrice; }
+            set { SetProperty(ref _totalPrice, value); }
+        }
+
         private void BookingViewModel_StayTypeChanged(object sender, TypeChangedEventArgs e)
         {
-            
+            PopulateDetailsPreview();
+        }
+
+        private void PopulateDetailsPreview()
+        {
+            if(_selectedStayType != null)
+            {
+                decimal price = _selectedStayType.Price;
+                Price = price;
+                int days = _calculationService.CalculateDays(SearchRooms.StartDate, SearchRooms.EndDate);
+                Days = days;
+                TotalPrice = _calculationService.CalculatePrice(days, SearchRooms.NumberOfPeople, price);
+            }
+         
         }
 
         private bool CanSearchExecute()
@@ -105,7 +148,7 @@ namespace Booking.ViewModels
                 SetProperty(ref _selectedStayType, value);
                 if(_selectedStayType != null)
                 {
-                    Calculation.GetInstance().OnStayTypeChanged(this, SelectedStayType);
+                    Calculation.GetInstance().OnStayTypeChanged(this, _selectedStayType);
                 }
             }
         }
@@ -136,5 +179,6 @@ namespace Booking.ViewModels
 
 
         public ICommand SearchCommand { get; }
+        
     }
 }
