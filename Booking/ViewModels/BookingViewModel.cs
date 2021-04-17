@@ -1,6 +1,5 @@
 ﻿using Booking.Events;
 using Booking.Mediator;
-using Booking.Model;
 using Booking.Wrapper;
 using BookSoft.BLL;
 using BookSoft.DAL;
@@ -8,7 +7,6 @@ using BookSoft.Domain.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -40,6 +38,15 @@ namespace Booking.ViewModels
             SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
             Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
+            SelectedRoomChange.GetInstance().RoomSelectionChanged += BookingViewModel_RoomSelectionChanged;
+        }
+
+        private void BookingViewModel_RoomSelectionChanged(object sender, RoomSelectionChangeEventArgs e)
+        {
+            DetailsVisibility = Price > 0 && Days > 0
+                                   && TotalPrice > 0
+                                   && _selectedStayType != null
+                                   && _selectedRoom != null;
         }
 
         private void SearchRooms_StateChanged()
@@ -71,7 +78,6 @@ namespace Booking.ViewModels
         {
             PopulateDetailsPreview();
         }
-
         private void PopulateDetailsPreview()
         {
             if(_selectedStayType != null)
@@ -81,15 +87,30 @@ namespace Booking.ViewModels
                 int days = _calculationService.CalculateDays(SearchRooms.StartDate, SearchRooms.EndDate);
                 Days = days;
                 TotalPrice = _calculationService.CalculatePrice(days, SearchRooms.NumberOfPeople, price);
+               
             }
          
         }
-
         private bool CanSearchExecute()
         {
             return SearchRooms.IsEnabled;
         }
 
+        private bool _detailsVisibility;
+        public bool DetailsVisibility
+        {
+            get { return _detailsVisibility; }
+            set 
+            {
+                SetProperty(ref _detailsVisibility, value);
+            }
+        }
+        private bool _guestListVisibility;
+        public bool GuestListVisibility
+        {
+            get { return _guestListVisibility; }
+            set { SetProperty(ref _guestListVisibility, value); }
+        }
         private void OnLoadEvent()
         {
 
@@ -166,6 +187,7 @@ namespace Booking.ViewModels
             set 
             { 
                 SetProperty(ref _selectedRoom, value);
+                SelectedRoomChange.GetInstance().OnRoomSelectionChanged(this, _selectedRoom);
             }
         }
         public ObservableCollection<AvailableRoomRequest> Rooms

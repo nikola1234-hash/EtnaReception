@@ -11,6 +11,9 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     FontSize="18"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="550" />
@@ -129,7 +132,8 @@
             Grid.Column="0"
             Margin="20,20,20,0"
             Background="{StaticResource DateAreaColorBrush}"
-            CornerRadius="25">
+            CornerRadius="25"
+            Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <StackPanel Orientation="Vertical">
                 <StackPanel Margin="20" Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
@@ -239,7 +243,8 @@
             Grid.ColumnSpan="1"
             Margin="20,40,20,10"
             Background="{StaticResource DateAreaColorBrush}"
-            CornerRadius="20">
+            CornerRadius="20"
+            Visibility="{Binding GuestListVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid Margin="10">
                 <ListView ItemsSource="{Binding Guests}" SelectedItem="{Binding SelectedGuest}">
                     <ListView.ItemTemplate>
