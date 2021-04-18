@@ -7,13 +7,16 @@ using BookSoft.Domain.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Booking.ViewModels
 {
-    public class BookingViewModel : BindableBase
+    public class BookingViewModel : BindableBase, INavigationAware
     {
         private readonly IUnitOfWork _unit;
         private readonly IEventAggregator _eventAggregator;
@@ -33,12 +36,27 @@ namespace Booking.ViewModels
             _unit = unit;
             _calculationService = calculationService;
             SearchRooms = new SearchWrapper();
+            Guest = new GuestWrapper();
             SearchRooms.StateChanged += SearchRooms_StateChanged;
             _eventAggregator = eventAggregator;
             SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
             Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
             SelectedRoomChange.GetInstance().RoomSelectionChanged += BookingViewModel_RoomSelectionChanged;
+            BookCommand = new DelegateCommand<object>(BookExecute, CanBookExecute);
+        }
+
+        private bool CanBookExecute(object arg)
+        {
+            return true;
+        }
+
+        private void BookExecute(object richTextBox)
+        {
+            if(richTextBox != null)
+            {
+                RichTextBox textBox = richTextBox as RichTextBox;
+            }
         }
 
         private void BookingViewModel_RoomSelectionChanged(object sender, RoomSelectionChangeEventArgs e)
@@ -125,6 +143,21 @@ namespace Booking.ViewModels
             
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool CanExecute
         {
             get { return SearchRooms.HasErrors == false; }
@@ -141,7 +174,15 @@ namespace Booking.ViewModels
             get => _searchRooms;
             set => SetProperty(ref _searchRooms, value);
         }
-
+        private GuestWrapper _guest;
+        public GuestWrapper Guest
+        {
+            get { return _guest; }
+            set 
+            { 
+                SetProperty(ref _guest, value);
+            }
+        }
 
 
 
@@ -201,6 +242,6 @@ namespace Booking.ViewModels
 
 
         public ICommand SearchCommand { get; }
-        
+        public DelegateCommand<object> BookCommand { get; }
     }
 }
