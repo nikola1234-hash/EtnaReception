@@ -14,11 +14,13 @@ namespace BookSoft.DAL
             Company = new CompanyRepository(_dataService);
             Room = new RoomRepository(_dataService);
             StayType = new StayTypesRepository(_dataService);
+            Guest = new GuestRepository(_dataService);
         }
 
         public UserRepository User { get; }
         public CompanyRepository Company { get; }
         public RoomRepository Room { get; }
         public StayTypesRepository StayType { get; }
+        public GuestRepository Guest { get; }
     }
 }

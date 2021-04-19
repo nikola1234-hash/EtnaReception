@@ -132,7 +132,7 @@ namespace Booking.ViewModels
         private void OnLoadEvent()
         {
 
-            StayTypes= _unit.StayType.GetAll();
+           
         }
 
         private void SearchExecute()
@@ -145,6 +145,7 @@ namespace Booking.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            StayTypes = _unit.StayType.GetAll();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
