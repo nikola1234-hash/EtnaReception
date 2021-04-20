@@ -1,6 +1,7 @@
 ﻿using BookSoft.Domain;
 using BookSoft.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookSoft.DAL.Repositories
 {
@@ -14,7 +15,7 @@ namespace BookSoft.DAL.Repositories
         }
         public IEnumerable<Guest> SearchGuest(object guest)
         {
-            var output = _dataService.LoadData<Guest, dynamic>("spGuest_Search", new { guest });
+            var output = _dataService.LoadData<Guest, dynamic>("spGuest_Search",  guest);
             return output;
         }
     }

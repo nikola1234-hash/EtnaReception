@@ -5,6 +5,6 @@ namespace BookSoft.BLL.Services
 {
     public interface ISearchGuestService
     {
-        public IEnumerable<Guest> SearchGuest(string firstName, string lastName, string jmbg, string address);
+        public IEnumerable<Guest> SearchGuest(string firstName = null, string lastName = null, string phone = null);
     }
 }

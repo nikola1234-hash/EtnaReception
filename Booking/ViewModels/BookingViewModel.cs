@@ -40,6 +40,8 @@ namespace Booking.ViewModels
             _calculationService = calculationService;
             _searchGuestService = searchGuestService;
 
+            GuestResults = new ObservableCollection<Guest>();
+
             SearchRooms = new SearchWrapper();
             Guest = new GuestWrapper();
             SearchRooms.StateChanged += SearchRooms_StateChanged;
@@ -54,10 +56,13 @@ namespace Booking.ViewModels
 
         private void Guest_StateChanged()
         {
-            var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Jmbg, Guest.Address);
-            GuestListVisibility = guests.Any();
-            GuestResults = new ObservableCollection<Guest>(guests);
+           
+                var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Phone);
+                GuestListVisibility = guests.Any();
+                GuestResults = new ObservableCollection<Guest>(guests);
+
         }
+          
 
         private bool CanBookExecute(object arg)
         {

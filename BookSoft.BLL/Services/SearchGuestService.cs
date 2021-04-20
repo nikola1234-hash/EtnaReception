@@ -13,14 +13,13 @@ namespace BookSoft.BLL.Services
             _unit = unit;
         }
 
-        public IEnumerable<Guest> SearchGuest(string firstName, string lastName, string jmbg, string address)
+        public IEnumerable<Guest> SearchGuest(string firstName = null, string lastName = null, string phone = null)
         {
             object searchItem = new
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Jmbg = jmbg,
-                Address = address
+                Phone = phone
             };
             var guests = _unit.Guest.SearchGuest(searchItem);
             return guests;

@@ -1,15 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[spGuest_Search]
-	@FirstName varchar(155),
-	@LastName varchar(155),
-	@Jmbg varchar(255),
-	@Address varchar(255),
+	@FirstName varchar(128),
+	@LastName varchar(128),
 	@Phone varchar(255)
 	AS
 	BEGIN
 		Select * 
 		from dbo.Guest 
-		WHERE Contains(FirstName, @FirstName)
-		OR Contains(FirstName,@FirstName) AND Contains(LastName, @LastName)
-		OR Contains(FirstName,@FirstName) AND Contains(LastName, @LastName) AND Contains([Address], @Address)
-		OR Contains(Phone, @Phone);
+		WHERE FirstName LIKE @FirstName + '%'
+		OR FirstName LIKE @FirstName +'%' AND LastName Like @LastName +'%'
+		OR FirstName LIKE @FirstName +'%' AND LastName Like @LastName +'%' AND Phone Like @Phone +'%' ;
 	END

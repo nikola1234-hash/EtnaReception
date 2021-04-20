@@ -15,7 +15,7 @@ namespace Booking.Wrapper
             set 
             {
                 SetProperty(ref _firstName, value);
-                ValidateProperty(nameof(FirstName));
+                //ValidateProperty(nameof(FirstName));
                 OnStateChanged();
             }
         }
@@ -23,15 +23,15 @@ namespace Booking.Wrapper
         private void ValidateProperty(string propertyName)
         {
             ClearErrors(propertyName);
-            if (String.IsNullOrWhiteSpace(FirstName))
+            if (string.IsNullOrWhiteSpace(FirstName))
             {
                 AddErrors(propertyName, "Ovo polje je obavezno!");
             }
-            if (String.IsNullOrWhiteSpace(LastName))
+            if (string.IsNullOrWhiteSpace(LastName))
             {
                 AddErrors(propertyName, "Ovo polje je obavezno!");
             }
-            if (String.IsNullOrWhiteSpace(Phone))
+            if (string.IsNullOrWhiteSpace(Phone))
             {
                 AddErrors(propertyName, "Ovo polje je obavezno!");
             }
@@ -48,7 +48,7 @@ namespace Booking.Wrapper
             set 
             {
                 SetProperty(ref _lastName, value);
-                ValidateProperty(nameof(LastName));
+                //ValidateProperty(nameof(LastName));
                 OnStateChanged();
             }
         }
@@ -59,14 +59,19 @@ namespace Booking.Wrapper
             set
             {
                 SetProperty(ref _phone, value);
-                ValidateProperty(nameof(Phone));
+                //ValidateProperty(nameof(Phone));
+                OnStateChanged();
             }
         }
         private string _email;
         public string Email
         {
             get { return _email; }
-            set { SetProperty(ref _email, value); }
+            set 
+            { 
+                SetProperty(ref _email, value);
+                OnStateChanged();
+            }
         }
         private string _address;
         public string Address
