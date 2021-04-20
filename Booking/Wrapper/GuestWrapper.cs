@@ -6,6 +6,8 @@ namespace Booking.Wrapper
 {
     public class GuestWrapper : ModelWrapper
     {
+        public event Action StateChanged;
+
         private string _firstName;
         public string FirstName
         {
@@ -14,6 +16,7 @@ namespace Booking.Wrapper
             {
                 SetProperty(ref _firstName, value);
                 ValidateProperty(nameof(FirstName));
+                OnStateChanged();
             }
         }
 
@@ -46,6 +49,7 @@ namespace Booking.Wrapper
             {
                 SetProperty(ref _lastName, value);
                 ValidateProperty(nameof(LastName));
+                OnStateChanged();
             }
         }
         private string _phone;
@@ -68,19 +72,31 @@ namespace Booking.Wrapper
         public string Address
         {
             get { return _address; }
-            set { SetProperty(ref _address, value); }
+            set 
+            {
+                SetProperty(ref _address, value);
+                OnStateChanged();
+            }
         }
         private string _jmbg;
         public string Jmbg
         {
             get { return _jmbg; }
-            set { SetProperty(ref _jmbg, value); }
+            set 
+            {
+                SetProperty(ref _jmbg, value);
+                OnStateChanged();
+            }
         }
         private string _details;
         public string Details
         {
             get { return _details; }
             set { SetProperty(ref _details, value); }
+        }
+        public void OnStateChanged()
+        {
+            StateChanged?.Invoke();
         }
     }
 }

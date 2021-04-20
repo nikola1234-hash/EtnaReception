@@ -9,7 +9,7 @@ namespace BookSoft.BLL.Authentications
         User CurrentUser { get; }
         bool IsLoggedIn { get; }
         RegistrationResult Register(string firstName,
-                                    string LastName,
+                                    string lastName,
                                     string email,
                                     string username,
                                     string password,

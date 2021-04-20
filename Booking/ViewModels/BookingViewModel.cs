@@ -2,6 +2,7 @@
 using Booking.Mediator;
 using Booking.Wrapper;
 using BookSoft.BLL;
+using BookSoft.BLL.Services;
 using BookSoft.DAL;
 using BookSoft.Domain.Models;
 using Prism.Commands;
@@ -11,6 +12,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -21,7 +23,7 @@ namespace Booking.ViewModels
         private readonly IUnitOfWork _unit;
         private readonly IEventAggregator _eventAggregator;
         private readonly IBookingCalculate _calculationService;
-
+        private readonly ISearchGuestService _searchGuestService;
         private ObservableCollection<AvailableRoomRequest> _rooms;
         private AvailableRoomRequest _selectedRoom;
         private IEnumerable<StayType> _stayTypes;
@@ -31,10 +33,13 @@ namespace Booking.ViewModels
         private SearchWrapper _searchRooms;
 
         public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator,
-                                IBookingCalculate calculationService)
+                                IBookingCalculate calculationService,
+                                ISearchGuestService searchGuestService)
         {
             _unit = unit;
             _calculationService = calculationService;
+            _searchGuestService = searchGuestService;
+
             SearchRooms = new SearchWrapper();
             Guest = new GuestWrapper();
             SearchRooms.StateChanged += SearchRooms_StateChanged;
@@ -44,6 +49,14 @@ namespace Booking.ViewModels
             Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
             SelectedRoomChange.GetInstance().RoomSelectionChanged += BookingViewModel_RoomSelectionChanged;
             BookCommand = new DelegateCommand<object>(BookExecute, CanBookExecute);
+            Guest.StateChanged += Guest_StateChanged;
+        }
+
+        private void Guest_StateChanged()
+        {
+            var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Jmbg, Guest.Address);
+            GuestListVisibility = guests.Any();
+            GuestResults = new ObservableCollection<Guest>(guests);
         }
 
         private bool CanBookExecute(object arg)
@@ -155,7 +168,10 @@ namespace Booking.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+            Guest.StateChanged -= Guest_StateChanged;
+            Calculation.GetInstance().StayTypeChanged -= BookingViewModel_StayTypeChanged;
+            SelectedRoomChange.GetInstance().RoomSelectionChanged -= BookingViewModel_RoomSelectionChanged;
+            SearchRooms.StateChanged -= SearchRooms_StateChanged;
         }
 
         public bool CanExecute
@@ -240,6 +256,18 @@ namespace Booking.ViewModels
             }
         }
 
+        private ObservableCollection<Guest> _guestResults;
+        public ObservableCollection<Guest> GuestResults
+        {
+            get { return _guestResults; }
+            set { SetProperty(ref _guestResults, value); }
+        }
+        private Guest _selectedGuestResult;
+        public Guest SelectedGuestResult
+        {
+            get { return _selectedGuestResult; }
+            set { SetProperty(ref _selectedGuestResult, value); }
+        }
 
         public ICommand SearchCommand { get; }
         public DelegateCommand<object> BookCommand { get; }

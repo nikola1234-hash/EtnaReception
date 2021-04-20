@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EtnaReception.Desktop", "Et
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Menu", "Menu\Menu.csproj", "{426BB95F-9AC3-456A-AFAC-80E6FEC1A876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Home", "Home\Home.csproj", "{AF3E65CB-77D3-44F8-9624-61FCA5AFBB2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Home", "Home\Home.csproj", "{AF3E65CB-77D3-44F8-9624-61FCA5AFBB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking", "Booking\Booking.csproj", "{2158EA4B-2261-41CF-8279-006E185D9126}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking", "Booking\Booking.csproj", "{2158EA4B-2261-41CF-8279-006E185D9126}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtnaReception.Configuration", "EtnaReception.Configuration\EtnaReception.Configuration.csproj", "{820FFFD4-3982-47AC-A5E7-B467327C5F2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{2158EA4B-2261-41CF-8279-006E185D9126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2158EA4B-2261-41CF-8279-006E185D9126}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2158EA4B-2261-41CF-8279-006E185D9126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820FFFD4-3982-47AC-A5E7-B467327C5F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820FFFD4-3982-47AC-A5E7-B467327C5F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820FFFD4-3982-47AC-A5E7-B467327C5F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820FFFD4-3982-47AC-A5E7-B467327C5F2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
