@@ -6,7 +6,7 @@
 	BEGIN
 		Select * 
 		from dbo.Guest 
-		WHERE FirstName LIKE @FirstName + '%'
+		WHERE FirstName LIKE @FirstName + '%' AND LastName Like @LastName +'%' AND Phone Like @Phone +'%'
 		OR FirstName LIKE @FirstName +'%' AND LastName Like @LastName +'%'
-		OR FirstName LIKE @FirstName +'%' AND LastName Like @LastName +'%' AND Phone Like @Phone +'%' ;
+		OR FirstName LIKE @FirstName +'%' ;
 	END

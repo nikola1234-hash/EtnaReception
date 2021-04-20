@@ -9,7 +9,7 @@
 		from dbo.Room as r
 		inner join dbo.RoomCapacity as roc ON r.CapacityId = roc.Id
 		inner join dbo.RoomType as rt on r.RoomTypeId = rt.Id
-		where roc.Capacity <= @numberOfPeople AND r.Id NOT IN
+		where roc.Capacity >= @numberOfPeople AND r.Id NOT IN
 		(Select rr.RoomId from dbo.RoomReservation as rr
 		inner join dbo.Reservation as re ON rr.ReservationId = re.Id
 		WHERE (@startDate < re.StartDate AND @endDate < re.EndDate)
