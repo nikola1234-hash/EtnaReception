@@ -1,6 +1,7 @@
 ﻿using BookSoft.DAL;
 using BookSoft.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookSoft.BLL.Services
 {

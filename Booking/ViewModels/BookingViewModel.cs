@@ -56,10 +56,13 @@ namespace Booking.ViewModels
 
         private void Guest_StateChanged()
         {
-           
-                var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Phone);
-                GuestListVisibility = guests.Any();
-                GuestResults = new ObservableCollection<Guest>(guests);
+           if(GuestResults.Count() > 0)
+           {
+               GuestResults.Clear();
+           }
+            var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Phone);
+            GuestListVisibility = guests.Any();
+            GuestResults = new ObservableCollection<Guest>(guests);
 
         }
           
