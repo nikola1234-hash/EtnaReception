@@ -28,6 +28,7 @@ namespace Booking
             containerRegistry.RegisterForNavigation<BookingView>();
             containerRegistry.Register<IBookingCalculate, BookinCalculationService>();
             containerRegistry.Register<ISearchGuestService, SearchGuestService>();
+            containerRegistry.Register<IReservationService, ReservationService>();
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Booking.ViewModels
@@ -24,6 +25,8 @@ namespace Booking.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IBookingCalculate _calculationService;
         private readonly ISearchGuestService _searchGuestService;
+        private readonly IReservationService _reservationService;
+
         private ObservableCollection<AvailableRoomRequest> _rooms;
         private AvailableRoomRequest _selectedRoom;
         private IEnumerable<StayType> _stayTypes;
@@ -34,11 +37,13 @@ namespace Booking.ViewModels
 
         public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator,
                                 IBookingCalculate calculationService,
-                                ISearchGuestService searchGuestService)
+                                ISearchGuestService searchGuestService,
+                                IReservationService reservationService)
         {
             _unit = unit;
             _calculationService = calculationService;
             _searchGuestService = searchGuestService;
+            _reservationService = reservationService;
 
             GuestResults = new ObservableCollection<Guest>();
 
@@ -93,10 +98,14 @@ namespace Booking.ViewModels
 
         private void BookExecute(object richTextBox)
         {
+            string richText;
             if(richTextBox != null)
             {
                 RichTextBox textBox = richTextBox as RichTextBox;
+                richText = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd).ToString();
             }
+
+            //_reservationService.CreateReservation()
         }
 
         private void BookingViewModel_RoomSelectionChanged(object sender, RoomSelectionChangeEventArgs e)
