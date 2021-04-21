@@ -251,17 +251,30 @@
             CornerRadius="20"
             Visibility="{Binding GuestListVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid Margin="10">
-                <ListView ItemsSource="{Binding GuestResults, Mode=OneWay}" SelectedItem="{Binding SelectedGuestResult}">
+                <ListView
+                    MaxWidth="300"
+                    ItemsSource="{Binding GuestResults, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedGuestResult}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding FirstName}" />
-                                    <TextBlock Text="{Binding LastName}" />
+                                    <TextBlock Text="Gost: " />
+                                    <TextBlock Margin="0,0,0,0" Text="{Binding FirstName}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding LastName}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Address}" />
-                                    <TextBlock Text="{Binding Email}" />
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Adresa: " />
+                                        <TextBlock Text="{Binding Address}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Email}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Tel: " />
+                                        <TextBlock Text="{Binding Phone}" />
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
