@@ -48,10 +48,29 @@ namespace Booking.ViewModels
             _eventAggregator = eventAggregator;
             SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
+
             Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
             SelectedRoomChange.GetInstance().RoomSelectionChanged += BookingViewModel_RoomSelectionChanged;
+            SelectedGuestEvent.GetInstance().SelectedGuestChanged += OnSelectedGuestChange;
+
             BookCommand = new DelegateCommand<object>(BookExecute, CanBookExecute);
             Guest.StateChanged += Guest_StateChanged;
+
+        }
+
+        private void OnSelectedGuestChange(object sender, SelectedGuestEventArgs e)
+        {
+            //TODO: Refactor
+            Guest = new GuestWrapper
+            {
+                FirstName = e.Guest.FirstName,
+                LastName = e.Guest.LastName,
+                Address = e.Guest.Address,
+                Email = e.Guest.Email,
+                Phone = e.Guest.Phone,
+                Jmbg = e.Guest.Jmbg
+            };
+
         }
 
         private void Guest_StateChanged()
@@ -180,6 +199,7 @@ namespace Booking.ViewModels
             Calculation.GetInstance().StayTypeChanged -= BookingViewModel_StayTypeChanged;
             SelectedRoomChange.GetInstance().RoomSelectionChanged -= BookingViewModel_RoomSelectionChanged;
             SearchRooms.StateChanged -= SearchRooms_StateChanged;
+            SelectedGuestEvent.GetInstance().SelectedGuestChanged -= OnSelectedGuestChange;
         }
 
         public bool CanExecute
@@ -274,10 +294,15 @@ namespace Booking.ViewModels
         public Guest SelectedGuestResult
         {
             get { return _selectedGuestResult; }
-            set { SetProperty(ref _selectedGuestResult, value); }
+            set
+            {
+                SetProperty(ref _selectedGuestResult, value);
+                SelectedGuestEvent.GetInstance().OnSelectedGuestChange(this, _selectedGuestResult);
+            }
         }
 
         public ICommand SearchCommand { get; }
         public DelegateCommand<object> BookCommand { get; }
+     
     }
 }
