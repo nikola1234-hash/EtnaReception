@@ -1,4 +1,6 @@
 ﻿using BookSoft.Domain;
+using BookSoft.Domain.Models;
+using System.Linq;
 
 namespace BookSoft.DAL.Repositories
 {
@@ -12,8 +14,8 @@ namespace BookSoft.DAL.Repositories
         }
         public int CreateReservation(object reservation)
         {
-            var id = _data.SaveData("spBooking_CreateReservation", reservation);
-            return id;
+            var id = _data.LoadData<int, dynamic>("spBooking_CreateReservation", reservation);
+            return id.FirstOrDefault();
         }
         public int CreateRoomReservation(object roomReservation)
         {

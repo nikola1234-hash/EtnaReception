@@ -116,6 +116,7 @@ namespace Booking.ViewModels
                 if(isCreated)
                     MessageBox.Show("Uspesno kreirana rezervacija");
             }
+            //Logika za novog gosta
             
             if(richTextBox != null)
             {

@@ -8,5 +8,5 @@
 		INSERT INTO dbo.RoomReservation(ReservationId, RoomId, Persons, StayTypeId)
 		VALUES 
 		(@ReservationId, @RoomId, @Persons, @StayTypeId);
-		RETURN @@IDENTITY;
+		SELECT @@IDENTITY;
 	END

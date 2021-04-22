@@ -5,7 +5,7 @@
 	AS
 	BEGIN
 	set nocount on;
-		select r.RoomNumber , roc.Capacity, rt.[Type] 
+		select r.Id, r.RoomNumber , roc.Capacity, rt.[Type] 
 		from dbo.Room as r
 		inner join dbo.RoomCapacity as roc ON r.CapacityId = roc.Id
 		inner join dbo.RoomType as rt on r.RoomTypeId = rt.Id

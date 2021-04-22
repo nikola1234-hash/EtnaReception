@@ -9,5 +9,5 @@
 		insert into dbo.Reservation(GuestId, StartDate, EndDate, DiscountPercent, TotalPrice, Created, Updated)
 		values
 		(@GuestId, @StartDate, @EndDate, @DiscountPercent, @TotalPrice, GETDATE(), GETDATE())
-		RETURN @@IDENTITY;
+		SELECT @@IDENTITY;
 	END
