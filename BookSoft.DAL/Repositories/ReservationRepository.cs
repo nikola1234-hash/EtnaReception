@@ -12,8 +12,13 @@ namespace BookSoft.DAL.Repositories
         }
         public int CreateReservation(object reservation)
         {
-            var rows = _data.SaveData("spReservation_CreateReservation", reservation);
-            return rows;
+            var id = _data.SaveData("spBooking_CreateReservation", reservation);
+            return id;
+        }
+        public int CreateRoomReservation(object roomReservation)
+        {
+            var id = _data.SaveData("spBooking_CreateRoomReservation", roomReservation);
+            return id;
         }
     }
 }

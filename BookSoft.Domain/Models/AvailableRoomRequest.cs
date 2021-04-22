@@ -1,6 +1,6 @@
 ﻿namespace BookSoft.Domain.Models
 {
-    public class AvailableRoomRequest
+    public class AvailableRoomRequest : DomainObject
     {
         public string RoomNumber { get; set; }
         public int Capacity { get; set; }

@@ -94,7 +94,9 @@
     <Build Include="dbo\StoredProcedures\StayType\spStayType_GetAll.sql" />
     <Build Include="dbo\StoredProcedures\StayType\spStayType_GetById.sql" />
     <Build Include="dbo\StoredProcedures\Guest\spGuest_Search.sql" />
+    <Build Include="dbo\StoredProcedures\Guest\spGuest_GetById.sql" />
     <Build Include="dbo\StoredProcedures\Booking\spBooking_CreateReservation.sql" />
+    <Build Include="dbo\StoredProcedures\Booking\spBooking_CreateRoomReservation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BookSoft.Database.refactorlog" />

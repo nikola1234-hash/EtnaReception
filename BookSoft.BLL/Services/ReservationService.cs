@@ -12,20 +12,31 @@ namespace BookSoft.BLL.Services
             _unit = unit;
         }
 
-        public bool CreateReservation(int guestId, DateTime startDate, DateTime endDate, decimal totalPrice, decimal discount = 0)
+        public int CreateReservation(int guestId, DateTime startDate, DateTime endDate, decimal totalPrice, decimal discount = 0)
         {
-            bool output = false;
             object reservation = new
             {
                 GuestId = guestId,
                 StartDate = startDate,
                 EndDate = endDate,
                 TotalPrice = totalPrice,
-                Discount = discount
+                DiscountPercent = discount
             };
-            var rows = _unit.Reservation.CreateReservation(reservation);
-            output = rows > 0;
+            int output = _unit.Reservation.CreateReservation(reservation);
             return output;
+        }
+
+        public int CreateRoomReservation(int reservationId, int roomId, int persons, int stayTypeId)
+        {
+            object roomReservation = new
+            {
+                ReservationId = reservationId,
+                RoomId = roomId,
+                Persons = persons,
+                StayTypeId = stayTypeId
+            };
+            var id = _unit.Reservation.CreateRoomReservation(roomReservation);
+            return id;
         }
     }
 }

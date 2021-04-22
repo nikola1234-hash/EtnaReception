@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -98,7 +99,24 @@ namespace Booking.ViewModels
 
         private void BookExecute(object richTextBox)
         {
+            bool isGuestSelected = false;
+            Guest guest;
             string richText;
+            int reservationId;
+            int roomReservationId;
+            isGuestSelected = _selectedGuestResult != null;
+            if (isGuestSelected)
+            {
+                reservationId = _reservationService.CreateReservation(_selectedGuestResult.Id, SearchRooms.StartDate,
+                                                                  SearchRooms.EndDate, TotalPrice);
+                roomReservationId = _reservationService.CreateRoomReservation(reservationId, _selectedRoom.Id,
+                                                                              SearchRooms.NumberOfPeople,
+                                                                              _selectedStayType.Id);
+                bool isCreated = reservationId > 0 && roomReservationId > 0;
+                if(isCreated)
+                    MessageBox.Show("Uspesno kreirana rezervacija");
+            }
+            
             if(richTextBox != null)
             {
                 RichTextBox textBox = richTextBox as RichTextBox;
