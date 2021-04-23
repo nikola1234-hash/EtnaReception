@@ -23,5 +23,10 @@ namespace BookSoft.DAL.Repositories
             var output = _dataService.LoadData<Guest, dynamic>("spGuest_GetById", new { Id = id });
             return output.FirstOrDefault();
         }
+        public Guest CreateGuest(object guest)
+        {
+            Guest output = _dataService.LoadData<Guest, dynamic>("spGuest_CreateNewGuest", guest).FirstOrDefault();
+            return output;
+        }
     }
 }

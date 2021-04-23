@@ -1,5 +1,6 @@
 ﻿using Booking.Events;
 using Booking.Mediator;
+using Booking.Services.Facade;
 using Booking.Wrapper;
 using BookSoft.BLL;
 using BookSoft.BLL.Services;
@@ -26,7 +27,7 @@ namespace Booking.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IBookingCalculate _calculationService;
         private readonly ISearchGuestService _searchGuestService;
-        private readonly IReservationService _reservationService;
+        private readonly IBookingFacade _bookingFacade;
 
         private ObservableCollection<AvailableRoomRequest> _rooms;
         private AvailableRoomRequest _selectedRoom;
@@ -39,12 +40,12 @@ namespace Booking.ViewModels
         public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator,
                                 IBookingCalculate calculationService,
                                 ISearchGuestService searchGuestService,
-                                IReservationService reservationService)
+                                IBookingFacade bookingFacade)
         {
             _unit = unit;
             _calculationService = calculationService;
             _searchGuestService = searchGuestService;
-            _reservationService = reservationService;
+            _bookingFacade = bookingFacade;
 
             GuestResults = new ObservableCollection<Guest>();
 
@@ -99,32 +100,19 @@ namespace Booking.ViewModels
 
         private void BookExecute(object richTextBox)
         {
-            bool isGuestSelected = false;
-            Guest guest;
+            bool isGuestSelected = _selectedGuestResult != null;
+            bool isSuccess = false;
             string richText;
-            int reservationId;
-            int roomReservationId;
-            isGuestSelected = _selectedGuestResult != null;
-            if (isGuestSelected)
-            {
-                reservationId = _reservationService.CreateReservation(_selectedGuestResult.Id, SearchRooms.StartDate,
-                                                                  SearchRooms.EndDate, TotalPrice);
-                roomReservationId = _reservationService.CreateRoomReservation(reservationId, _selectedRoom.Id,
-                                                                              SearchRooms.NumberOfPeople,
-                                                                              _selectedStayType.Id);
-                bool isCreated = reservationId > 0 && roomReservationId > 0;
-                if(isCreated)
-                    MessageBox.Show("Uspesno kreirana rezervacija");
-            }
-            //Logika za novog gosta
-            
-            if(richTextBox != null)
+            if (richTextBox != null)
             {
                 RichTextBox textBox = richTextBox as RichTextBox;
                 richText = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd).ToString();
             }
-
-            //_reservationService.CreateReservation()
+            isSuccess = _bookingFacade.CreateBooking(SearchRooms, _selectedRoom.Id, _totalPrice, _selectedStayType.Id,
+                                        isGuestSelected, _selectedGuestResult.Id, discount: 0, Guest);
+            if (isSuccess)
+                MessageBox.Show("Uspesno izvrsena rezervacija");
+         
         }
 
         private void BookingViewModel_RoomSelectionChanged(object sender, RoomSelectionChangeEventArgs e)

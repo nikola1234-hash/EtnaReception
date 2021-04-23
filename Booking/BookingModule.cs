@@ -1,4 +1,5 @@
-﻿using Booking.Views;
+﻿using Booking.Services.Facade;
+using Booking.Views;
 using BookSoft.BLL;
 using BookSoft.BLL.Regions;
 using BookSoft.BLL.Services;
@@ -29,6 +30,8 @@ namespace Booking
             containerRegistry.Register<IBookingCalculate, BookinCalculationService>();
             containerRegistry.Register<ISearchGuestService, SearchGuestService>();
             containerRegistry.Register<IReservationService, ReservationService>();
+            containerRegistry.Register<IBookingFacade, BookingFacade>();
+            containerRegistry.Register<IGuestService, GuestService>();
         }
     }
 }
