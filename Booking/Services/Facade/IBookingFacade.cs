@@ -9,7 +9,7 @@ namespace Booking.Services.Facade
                                   decimal totalPrice,
                                   int stayTypeId,
                                   bool isGuestSelected,
-                                  int guestId = 0,
+                                  int? guestId = 0,
                                   decimal discount = 0,
                                   GuestWrapper guestWrapper = null);
     }
