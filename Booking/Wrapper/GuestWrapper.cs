@@ -1,6 +1,7 @@
 ﻿using Booking.Model;
 using BookSoft.BLL.Validation;
 using System;
+using System.Windows.Documents;
 
 namespace Booking.Wrapper
 {

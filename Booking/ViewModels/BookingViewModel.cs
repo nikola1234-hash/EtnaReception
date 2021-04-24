@@ -102,11 +102,10 @@ namespace Booking.ViewModels
         {
             bool isGuestSelected = _selectedGuestResult != null;
             bool isSuccess = false;
-            string richText;
             if (richTextBox != null)
             {
                 RichTextBox textBox = richTextBox as RichTextBox;
-                richText = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd).ToString();
+                Guest.Details = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd).ToString();
             }
             isSuccess = _bookingFacade.CreateBooking(SearchRooms, _selectedRoom.Id, _totalPrice, _selectedStayType.Id,
                                         isGuestSelected, _selectedGuestResult.Id, discount: 0, Guest);
