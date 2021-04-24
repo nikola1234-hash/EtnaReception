@@ -105,7 +105,8 @@ namespace Booking.ViewModels
             if (richTextBox != null)
             {
                 RichTextBox textBox = richTextBox as RichTextBox;
-                Guest.Details = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd).ToString();
+                TextRange textRange = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd);
+                Guest.Details = textRange.Text;
             }
             if(_selectedGuestResult is null)
             {
