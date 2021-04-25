@@ -25,7 +25,7 @@ namespace Booking.Services.Facade
             int numberOfPeople;
             int stayTypeId;
             bool success = false;
-            int idGuest;
+            int idGuest = 0;
             int roomId;
             decimal discount = 0M; 
 
@@ -38,17 +38,9 @@ namespace Booking.Services.Facade
             totalPrice = viewModel.TotalPrice;
             var guestWrapper = viewModel.Guest;
 
-            if (viewModel.IsGuestSelected)
+            if (viewModel.IsGuestSelected && viewModel.SelectedGuestResult.Id > 0)
             {
-
-                if (viewModel.SelectedGuestResult.Id > 0)
-                {
-                    idGuest = viewModel.SelectedGuestResult.Id;
-
-                    int reservationId = _reservationService.CreateReservation(idGuest, startDate, endDate, totalPrice);
-                    int done = _reservationService.CreateRoomReservation(reservationId, roomId, numberOfPeople ,stayTypeId);
-                    success = reservationId > 0 && done > 0;
-                }
+                  idGuest = viewModel.SelectedGuestResult.Id;
             }
             bool shouldCreateNewGuest = guestWrapper != null && viewModel.IsGuestSelected == false;
             if (shouldCreateNewGuest)
@@ -64,10 +56,12 @@ namespace Booking.Services.Facade
                     Jmbg = guestWrapper.Jmbg
                 };
                 Guest newGuest = _guestService.CreateGuest(guestForCreation);
-                int reservationId = _reservationService.CreateReservation(newGuest.Id, startDate, endDate, totalPrice, discount);
-                int id = _reservationService.CreateRoomReservation(reservationId, roomId, numberOfPeople, stayTypeId);
-                success = reservationId > 0 && id > 0;
+                idGuest = newGuest.Id;
             }
+            int reservationId = _reservationService.CreateReservation(idGuest, startDate, endDate, totalPrice, discount);
+            int roomReservationId = _reservationService.CreateRoomReservation(reservationId, roomId, numberOfPeople, stayTypeId);
+            success = reservationId > 0 && roomReservationId > 0;
+
             return success;
         }
     }
