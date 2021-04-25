@@ -68,16 +68,18 @@ namespace Booking.ViewModels
         private void OnSelectedGuestChange(object sender, SelectedGuestEventArgs e)
         {
             //TODO: Refactor
-            Guest = new GuestWrapper
+            if(e.Guest != null)
             {
-                FirstName = e.Guest.FirstName,
-                LastName = e.Guest.LastName,
-                Address = e.Guest.Address,
-                Email = e.Guest.Email,
-                Phone = e.Guest.Phone,
-                Jmbg = e.Guest.Jmbg
-            };
-
+                Guest = new GuestWrapper
+                {
+                    FirstName = e.Guest.FirstName,
+                    LastName = e.Guest.LastName,
+                    Address = e.Guest.Address,
+                    Email = e.Guest.Email,
+                    Phone = e.Guest.Phone,
+                    Jmbg = e.Guest.Jmbg
+                };
+            }
         }
 
         private void Guest_StateChanged()

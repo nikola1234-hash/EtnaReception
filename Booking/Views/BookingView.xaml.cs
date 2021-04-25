@@ -22,5 +22,13 @@ namespace Booking.Views
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(guestListView.SelectedItem != null)
+            {
+                guestListView.SelectedItem = null;
+            }
+        }
     }
 }
