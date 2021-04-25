@@ -100,7 +100,7 @@ namespace Booking.ViewModels
 
         private void BookExecute(object richTextBox)
         {
-            bool isGuestSelected = _selectedGuestResult != null;
+            IsGuestSelected = _selectedGuestResult != null;
             bool isSuccess = false;
             if (richTextBox != null)
             {
@@ -112,8 +112,7 @@ namespace Booking.ViewModels
             {
                 _selectedGuestResult = new Guest();
             }
-            isSuccess = _bookingFacade.CreateBooking(SearchRooms, _selectedRoom.Id, _totalPrice, _selectedStayType.Id,
-                                        isGuestSelected, _selectedGuestResult.Id, discount: 0, Guest);
+            isSuccess = _bookingFacade.CreateBooking(this);
             if (isSuccess)
                 MessageBox.Show("Uspesno izvrsena rezervacija");
          
@@ -320,7 +319,12 @@ namespace Booking.ViewModels
                 SelectedGuestEvent.GetInstance().OnSelectedGuestChange(this, _selectedGuestResult);
             }
         }
-
+        private bool _isGuestSelected;
+        public bool IsGuestSelected
+        {
+            get { return _isGuestSelected; }
+            set { SetProperty(ref _isGuestSelected, value); }
+        }
         public ICommand SearchCommand { get; }
         public DelegateCommand<object> BookCommand { get; }
      

@@ -1,6 +1,7 @@
-﻿using Booking.Wrapper;
+﻿using Booking.ViewModels;
 using BookSoft.BLL.Services;
 using BookSoft.Domain.Models;
+using System;
 
 namespace Booking.Services.Facade
 {
@@ -16,30 +17,40 @@ namespace Booking.Services.Facade
             _guestService = guestService;
         }
 
-        public bool CreateBooking(SearchWrapper searchWrapper,
-                                  int roomId,
-                                  decimal totalPrice,
-                                  int stayTypeId,
-                                  bool isGuestSelected,
-                                  int? guestId = 0,
-                                  decimal discount = 0,
-                                  GuestWrapper guestWrapper = null)
+        public bool CreateBooking(BookingViewModel viewModel)
         {
+            DateTime startDate;
+            DateTime endDate;
+            decimal totalPrice;
+            int numberOfPeople;
+            int stayTypeId;
             bool success = false;
             int idGuest;
-            if (isGuestSelected)
+            int roomId;
+            decimal discount = 0M; 
+
+
+            startDate = viewModel.SearchRooms.StartDate.Date;
+            endDate = viewModel.SearchRooms.EndDate.Date;
+            numberOfPeople = viewModel.SearchRooms.NumberOfPeople;
+            stayTypeId = viewModel.SelectedStayType.Id;
+            roomId = viewModel.SelectedRoom.Id;
+            totalPrice = viewModel.TotalPrice;
+            var guestWrapper = viewModel.Guest;
+
+            if (viewModel.IsGuestSelected)
             {
 
-                if (guestId.HasValue && guestId.Value > 0)
+                if (viewModel.SelectedGuestResult.Id > 0)
                 {
-                    idGuest = guestId.Value;
-                
-                    int reservationId = _reservationService.CreateReservation(idGuest, searchWrapper.StartDate, searchWrapper.EndDate, totalPrice);
-                    int done = _reservationService.CreateRoomReservation(reservationId, roomId, searchWrapper.NumberOfPeople ,stayTypeId);
+                    idGuest = viewModel.SelectedGuestResult.Id;
+
+                    int reservationId = _reservationService.CreateReservation(idGuest, startDate, endDate, totalPrice);
+                    int done = _reservationService.CreateRoomReservation(reservationId, roomId, numberOfPeople ,stayTypeId);
                     success = reservationId > 0 && done > 0;
                 }
             }
-            bool shouldCreateNewGuest = guestWrapper != null && isGuestSelected == false;
+            bool shouldCreateNewGuest = guestWrapper != null && viewModel.IsGuestSelected == false;
             if (shouldCreateNewGuest)
             {
                 var guestForCreation = new
@@ -53,8 +64,8 @@ namespace Booking.Services.Facade
                     Jmbg = guestWrapper.Jmbg
                 };
                 Guest newGuest = _guestService.CreateGuest(guestForCreation);
-                int reservationId = _reservationService.CreateReservation(newGuest.Id, searchWrapper.StartDate, searchWrapper.EndDate, totalPrice, discount);
-                int id = _reservationService.CreateRoomReservation(reservationId, roomId, searchWrapper.NumberOfPeople, stayTypeId);
+                int reservationId = _reservationService.CreateReservation(newGuest.Id, startDate, endDate, totalPrice, discount);
+                int id = _reservationService.CreateRoomReservation(reservationId, roomId, numberOfPeople, stayTypeId);
                 success = reservationId > 0 && id > 0;
             }
             return success;
