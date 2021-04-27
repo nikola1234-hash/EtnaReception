@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Menu.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:nav="clr-namespace:Menu.Navigation"
+    xmlns:nav="clr-namespace:BookSoft.BLL.Navigation;assembly=BookSoft.BLL"
     xmlns:prism="http://prismlibrary.com/"
     d:DesignHeight="300"
     d:DesignWidth="300"

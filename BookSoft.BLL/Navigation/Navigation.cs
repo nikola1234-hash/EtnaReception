@@ -1,4 +1,4 @@
-﻿namespace Menu.Navigation
+﻿namespace BookSoft.BLL.Navigation
 {
     public enum NavigationType
     {

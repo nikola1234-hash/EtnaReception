@@ -1,6 +1,6 @@
 ﻿using Booking.Events;
+using BookSoft.BLL.Navigation;
 using BookSoft.BLL.Regions;
-using Menu.Navigation;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;

@@ -3,6 +3,8 @@ using Booking.Mediator;
 using Booking.Services.Facade;
 using Booking.Wrapper;
 using BookSoft.BLL;
+using BookSoft.BLL.Navigation;
+using BookSoft.BLL.Regions;
 using BookSoft.BLL.Services;
 using BookSoft.DAL;
 using BookSoft.Domain.Models;
@@ -28,6 +30,7 @@ namespace Booking.ViewModels
         private readonly IBookingCalculate _calculationService;
         private readonly ISearchGuestService _searchGuestService;
         private readonly IBookingFacade _bookingFacade;
+        private readonly IRegionManager _regionManager;
 
         private ObservableCollection<AvailableRoomRequest> _rooms;
         private AvailableRoomRequest _selectedRoom;
@@ -40,13 +43,16 @@ namespace Booking.ViewModels
         public BookingViewModel(IUnitOfWork unit, IEventAggregator eventAggregator,
                                 IBookingCalculate calculationService,
                                 ISearchGuestService searchGuestService,
-                                IBookingFacade bookingFacade)
+                                IBookingFacade bookingFacade,
+                                IRegionManager regionManager)
         {
             _unit = unit;
             _calculationService = calculationService;
             _searchGuestService = searchGuestService;
             _bookingFacade = bookingFacade;
             _eventAggregator = eventAggregator;
+
+            _regionManager = regionManager;
 
             GuestResults = new ObservableCollection<Guest>();
             SearchRooms = new SearchWrapper();
@@ -133,8 +139,16 @@ namespace Booking.ViewModels
             }
             isSuccess = _bookingFacade.CreateBooking(this);
             if (isSuccess)
-                MessageBox.Show("Uspesno izvrsena rezervacija");
-         
+            {
+                var result = MessageBox.Show("Uspesno izvrsena rezervacija", "Uspesno", MessageBoxButton.OK);
+                if(result == MessageBoxResult.OK)
+                {
+                    _regionManager.RequestNavigate(RegionNames.MainRegion, NavigationType.BookingView.ToString());
+                }
+            }
+           
+
+
         }
 
         private void BookingViewModel_RoomSelectionChanged(object sender, RoomSelectionChangeEventArgs e)
@@ -239,6 +253,7 @@ namespace Booking.ViewModels
             SelectedRoomChange.GetInstance().RoomSelectionChanged -= BookingViewModel_RoomSelectionChanged;
             SearchRooms.StateChanged -= SearchRooms_StateChanged;
             SelectedGuestEvent.GetInstance().SelectedGuestChanged -= OnSelectedGuestChange;
+           
         }
 
         public void Dispose()
