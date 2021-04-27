@@ -32,24 +32,33 @@ namespace Booking.Wrapper
         private void Validation(string propertyName)
         {
             ClearErrors(propertyName);
-            if(StartDate.Date < DateTime.Now.Date)
+            switch (propertyName)
             {
-                AddErrors(propertyName, "Rezervacija ne moze da se upisuje retroaktivno.");
-            }
-            if(EndDate.Date < DateTime.Now.Date)
-            {
-                AddErrors(propertyName,
-                    $"Nije dobro upisan datum odlaska!" +
-                    $" Danasnji datum je {DateTime.Now.Date}," +
-                    $" izabran datum je {EndDate.Date}");
-            }
-            if(NumberOfPeople > 10)
-            {
-                AddErrors(propertyName, "Da li imate smestaj za ovoliko ljudi?");
-            }
-            if(NumberOfPeople == 0)
-            {
-                AddErrors(propertyName, "Broj osoba mora biti veci od nula!");
+                case nameof(StartDate):
+                    if (StartDate.Date < DateTime.Now.Date)
+                    {
+                        AddErrors(propertyName, "Rezervacija ne moze da se upisuje retroaktivno.");
+                    }
+                    break;
+                case nameof(EndDate):
+                    if (EndDate.Date < DateTime.Now.Date)
+                    {
+                        AddErrors(propertyName,
+                            $"Nije dobro upisan datum odlaska!" +
+                            $" Danasnji datum je {DateTime.Now.Date}," +
+                            $" izabran datum je {EndDate.Date}");
+                    }
+                    break;
+                case nameof(NumberOfPeople):
+                    if (NumberOfPeople > 10)
+                    {
+                        AddErrors(propertyName, "Da li imate smestaj za ovoliko ljudi?");
+                    }
+                    if (NumberOfPeople == 0)
+                    {
+                        AddErrors(propertyName, "Broj osoba mora biti veci od nula!");
+                    }
+                    break;
             }
         }
         private DateTime _endDate = DateTime.Now.Date.AddDays(2);
