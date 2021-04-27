@@ -16,7 +16,7 @@ namespace Booking.Wrapper
             set 
             {
                 SetProperty(ref _firstName, value);
-                //ValidateProperty(nameof(FirstName));
+                ValidateProperty(nameof(FirstName));
                 OnStateChanged();
             }
         }
@@ -24,21 +24,39 @@ namespace Booking.Wrapper
         private void ValidateProperty(string propertyName)
         {
             ClearErrors(propertyName);
-            if (string.IsNullOrWhiteSpace(FirstName))
+            switch (propertyName)
             {
-                AddErrors(propertyName, "Ovo polje je obavezno!");
-            }
-            if (string.IsNullOrWhiteSpace(LastName))
-            {
-                AddErrors(propertyName, "Ovo polje je obavezno!");
-            }
-            if (string.IsNullOrWhiteSpace(Phone))
-            {
-                AddErrors(propertyName, "Ovo polje je obavezno!");
-            }
-            if(!NumbersValidation.Validate(Phone))
-            {
-                AddErrors(propertyName, "Broj telefona moze da sadrzi samo brojeve!");
+                case nameof(FirstName):
+                    if (string.IsNullOrEmpty(FirstName))
+                    {
+                        AddErrors(propertyName, "Ovo polje je obavezno.");
+                    }
+                    if(FirstName.Length < 3)
+                    {
+                        AddErrors(propertyName, "Ime mora imati minimum 3 slova.");
+                    }
+
+                    break;
+                case nameof(LastName):
+                    if (string.IsNullOrEmpty(LastName))
+                    {
+                        AddErrors(propertyName, "Ovo polje je obavezno.");
+                    }
+                    if(LastName.Length < 3)
+                    {
+                        AddErrors(propertyName, "Prezime mora imati vise od 3 karaktera.");
+                    }
+                    break;
+                case nameof(Phone):
+                    if (string.IsNullOrEmpty(Phone))
+                    {
+                        AddErrors(propertyName, "Broj telefona je obavezno polje.");
+                    }
+                    if (!NumbersValidation.Validate(Phone))
+                    {
+                        AddErrors(propertyName, "Broj telefona se izrazava u brojevima.");
+                    }
+                    break;
             }
         }
 
@@ -49,7 +67,7 @@ namespace Booking.Wrapper
             set 
             {
                 SetProperty(ref _lastName, value);
-                //ValidateProperty(nameof(LastName));
+                ValidateProperty(nameof(LastName));
                 OnStateChanged();
             }
         }
@@ -60,7 +78,7 @@ namespace Booking.Wrapper
             set
             {
                 SetProperty(ref _phone, value);
-                //ValidateProperty(nameof(Phone));
+                ValidateProperty(nameof(Phone));
                 OnStateChanged();
             }
         }

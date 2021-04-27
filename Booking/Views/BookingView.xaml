@@ -140,21 +140,21 @@
                         <TextBlock Text="Ime:" />
                         <TextBox
                             Width="125"
-                            Text="{Binding Guest.FirstName, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
+                            Text="{Binding Path=Guest.FirstName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"
                             TextChanged="TextBox_TextChanged" />
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0" Orientation="Vertical">
                         <TextBlock Text="Prezime:" />
                         <TextBox
                             Width="125"
-                            Text="{Binding Guest.LastName, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
+                            Text="{Binding Path=Guest.LastName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"
                             TextChanged="TextBox_TextChanged" />
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0" Orientation="Vertical">
                         <TextBlock Text="Telefon:" />
                         <TextBox
                             Width="170"
-                            Text="{Binding Guest.Phone, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
+                            Text="{Binding Path=Guest.Phone, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"
                             TextChanged="TextBox_TextChanged" />
                     </StackPanel>
                 </StackPanel>
@@ -163,14 +163,14 @@
                         <TextBlock Text="Adresa:" />
                         <TextBox
                             Width="270"
-                            Text="{Binding Guest.Address, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
+                            Text="{Binding Path=Guest.Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"
                             TextChanged="TextBox_TextChanged" />
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0" Orientation="Vertical">
                         <TextBlock Text="Jmbg:" />
                         <TextBox
                             Width="170"
-                            Text="{Binding Guest.Jmbg, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
+                            Text="{Binding Path=Guest.Jmbg, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True}"
                             TextChanged="TextBox_TextChanged" />
                     </StackPanel>
                 </StackPanel>
@@ -179,7 +179,7 @@
                         <TextBlock Text="Email:" />
                         <TextBox
                             Width="270"
-                            Text="{Binding Guest.Email, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
+                            Text="{Binding Path=Guest.Email, Mode=TwoWay, UpdateSourceTrigger=Default, ValidatesOnNotifyDataErrors=True}"
                             TextChanged="TextBox_TextChanged" />
                     </StackPanel>
                     <Button

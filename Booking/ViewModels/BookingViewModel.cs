@@ -21,7 +21,7 @@ using System.Windows.Input;
 
 namespace Booking.ViewModels
 {
-    public class BookingViewModel : BindableBase, INavigationAware
+    public class BookingViewModel : BindableBase, INavigationAware, IDisposable
     {
         private readonly IUnitOfWork _unit;
         private readonly IEventAggregator _eventAggregator;
@@ -46,21 +46,22 @@ namespace Booking.ViewModels
             _calculationService = calculationService;
             _searchGuestService = searchGuestService;
             _bookingFacade = bookingFacade;
+            _eventAggregator = eventAggregator;
 
             GuestResults = new ObservableCollection<Guest>();
-
             SearchRooms = new SearchWrapper();
             Guest = new GuestWrapper();
-            SearchRooms.StateChanged += SearchRooms_StateChanged;
-            _eventAggregator = eventAggregator;
+
             SearchCommand = new DelegateCommand(SearchExecute, CanSearchExecute).ObservesCanExecute(() => SearchRooms.IsEnabled);
+            BookCommand = new DelegateCommand<object>(BookExecute, CanBookExecute).ObservesCanExecute(()=> IsGuestFormValid);
+
             _eventAggregator.GetEvent<LoadEvent>().Subscribe(OnLoadEvent);
 
             Calculation.GetInstance().StayTypeChanged += BookingViewModel_StayTypeChanged;
             SelectedRoomChange.GetInstance().RoomSelectionChanged += BookingViewModel_RoomSelectionChanged;
             SelectedGuestEvent.GetInstance().SelectedGuestChanged += OnSelectedGuestChange;
 
-            BookCommand = new DelegateCommand<object>(BookExecute, CanBookExecute);
+            SearchRooms.StateChanged += SearchRooms_StateChanged;
             Guest.StateChanged += Guest_StateChanged;
 
         }
@@ -80,24 +81,40 @@ namespace Booking.ViewModels
                     Jmbg = e.Guest.Jmbg
                 };
             }
+            return;
         }
 
         private void Guest_StateChanged()
         {
+            
            if(GuestResults.Count() > 0)
            {
                GuestResults.Clear();
            }
-            var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Phone);
-            GuestListVisibility = guests.Any();
-            GuestResults = new ObservableCollection<Guest>(guests);
+           var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Phone);
+           GuestListVisibility = guests.Any();
+           if (guests.Any())
+           {
+               GuestResults = new ObservableCollection<Guest>(guests);
+           }
+           IsGuestFormValid = Guest.HasErrors == false 
+                           || _selectedGuestResult != null;
 
         }
-          
+
+        private bool _isGuestFormValid;
+        public bool IsGuestFormValid
+        {
+            get { return _isGuestFormValid; }
+            set 
+            {
+                SetProperty(ref _isGuestFormValid, value); 
+            }
+        }
 
         private bool CanBookExecute(object arg)
         {
-            return true;
+            return IsGuestFormValid;
         }
 
         private void BookExecute(object richTextBox)
@@ -162,10 +179,11 @@ namespace Booking.ViewModels
             if(_selectedStayType != null)
             {
                 decimal price = _selectedStayType.Price;
-                Price = price;
                 int days = _calculationService.CalculateDays(SearchRooms.StartDate, SearchRooms.EndDate);
+                decimal totalPrice = _calculationService.CalculatePrice(days, SearchRooms.NumberOfPeople, price);
+                Price = price;
                 Days = days;
-                TotalPrice = _calculationService.CalculatePrice(days, SearchRooms.NumberOfPeople, price);
+                TotalPrice = totalPrice;
                
             }
          
@@ -223,6 +241,10 @@ namespace Booking.ViewModels
             SelectedGuestEvent.GetInstance().SelectedGuestChanged -= OnSelectedGuestChange;
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
         public bool CanExecute
         {
             get { return SearchRooms.HasErrors == false; }
