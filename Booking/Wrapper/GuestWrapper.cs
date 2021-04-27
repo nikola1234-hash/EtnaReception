@@ -5,9 +5,10 @@ using System.Windows.Documents;
 
 namespace Booking.Wrapper
 {
+    public delegate void Notify();
     public class GuestWrapper : ModelWrapper
     {
-        public event Action StateChanged;
+        public event Notify StateChanged;
 
         private string _firstName;
         public string FirstName
