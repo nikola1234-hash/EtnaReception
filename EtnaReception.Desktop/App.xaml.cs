@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Reception;
 using System.IO;
 using System.Windows;
 
@@ -57,7 +58,8 @@ namespace EtnaReception.Desktop
         {
             moduleCatalog.AddModule<MenuModule>();
             moduleCatalog.AddModule<HomeModule>();
-            moduleCatalog.AddModule<BookingModule>();       
+            moduleCatalog.AddModule<BookingModule>();
+            moduleCatalog.AddModule<ReceptionModule>();
         }
     }
 }

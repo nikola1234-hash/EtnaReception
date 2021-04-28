@@ -14,6 +14,7 @@
     <ProjectReference Include="..\BookSoft.DAL\BookSoft.DAL.csproj" />
     <ProjectReference Include="..\Home\Home.csproj" />
     <ProjectReference Include="..\Menu\Menu.csproj" />
+    <ProjectReference Include="..\Reception\Reception.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

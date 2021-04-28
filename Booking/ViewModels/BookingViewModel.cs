@@ -154,9 +154,9 @@ namespace Booking.ViewModels
         private void BookingViewModel_RoomSelectionChanged(object sender, RoomSelectionChangeEventArgs e)
         {
             DetailsVisibility = Price > 0 && Days > 0
-                                   && TotalPrice > 0
-                                   && _selectedStayType != null
-                                   && _selectedRoom != null;
+                                && TotalPrice > 0
+                                && _selectedStayType != null
+                                && _selectedRoom != null;
         }
 
         private void SearchRooms_StateChanged()
