@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,11 +14,11 @@ using System.Windows.Shapes;
 namespace Reception.Views
 {
     /// <summary>
-    /// Interaction logic for ViewA.xaml
+    /// Interaction logic for ReceptionView.xaml
     /// </summary>
-    public partial class ViewA : UserControl
+    public partial class ReceptionView : UserControl
     {
-        public ViewA()
+        public ReceptionView()
         {
             InitializeComponent();
         }
