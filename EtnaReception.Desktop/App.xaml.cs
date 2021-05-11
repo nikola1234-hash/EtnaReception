@@ -16,6 +16,7 @@ using Prism.Regions;
 using Reception;
 using System.IO;
 using System.Windows;
+using BookSoft.BLL.License;
 
 namespace EtnaReception.Desktop
 {
@@ -46,6 +47,7 @@ namespace EtnaReception.Desktop
         }
         protected override void OnInitialized()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(SyncfusionKey.Key);
             Window login = Container.Resolve<LoginWindow>();
             var result = login.ShowDialog();
             if (result.Value)
