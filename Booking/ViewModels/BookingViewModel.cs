@@ -87,13 +87,12 @@ namespace Booking.ViewModels
                     Jmbg = e.Guest.Jmbg
                 };
             }
-            return;
         }
 
         private void Guest_StateChanged()
         {
             
-           if(GuestResults.Count() > 0)
+           if(GuestResults.Any())
            {
                GuestResults.Clear();
            }
@@ -133,10 +132,7 @@ namespace Booking.ViewModels
                 TextRange textRange = new TextRange(textBox.Document.ContentStart, textBox.Document.ContentEnd);
                 Guest.Details = textRange.Text;
             }
-            if(_selectedGuestResult is null)
-            {
-                _selectedGuestResult = new Guest();
-            }
+            _selectedGuestResult ??= new Guest();
             isSuccess = _bookingFacade.CreateBooking(this);
             if (isSuccess)
             {
