@@ -6,9 +6,17 @@
     xmlns:local="clr-namespace:Reception.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
-    <Grid />
+    <Grid >
+        <Syncfusion:SfScheduler
+            ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}"
+            ResourceCollection="{Binding Resources, UpdateSourceTrigger=PropertyChanged}"
+            ResourceGroupType="Resource"
+            ViewType="TimelineMonth">
+        </Syncfusion:SfScheduler>
+    </Grid>
 </UserControl>
