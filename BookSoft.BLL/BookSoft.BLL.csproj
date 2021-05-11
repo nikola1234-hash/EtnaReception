@@ -5,13 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookSoft.DAL\BookSoft.DAL.csproj" />
-    <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
+    <Compile Remove="Models\**" />
+    <Compile Remove="Wrappers\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Wrappers\**" />
+    <None Remove="Models\**" />
+    <None Remove="Wrappers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Wrappers\" />
+    <ProjectReference Include="..\BookSoft.DAL\BookSoft.DAL.csproj" />
+    <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
   </ItemGroup>
 
 </Project>

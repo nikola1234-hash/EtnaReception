@@ -16,6 +16,7 @@ namespace BookSoft.DAL
             StayType = new StayTypesRepository(_dataService);
             Guest = new GuestRepository(_dataService);
             Reservation = new ReservationRepository(_dataService);
+            RoomReservation = new RoomReservationRepository(_dataService);
         }
 
         public UserRepository User { get; }
@@ -24,5 +25,6 @@ namespace BookSoft.DAL
         public StayTypesRepository StayType { get; }
         public GuestRepository Guest { get; }
         public ReservationRepository Reservation { get; }
+        public RoomReservationRepository RoomReservation { get; }
     }
 }

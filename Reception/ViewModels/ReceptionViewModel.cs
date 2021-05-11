@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+using BookSoft.BLL.Services;
 using Prism.Mvvm;
 using Prism.Regions;
+using Reception.Services;
 using Syncfusion.UI.Xaml.Scheduler;
 
 namespace Reception.ViewModels
@@ -83,4 +85,4 @@ namespace Reception.ViewModels
     }
 
 }
-}
+

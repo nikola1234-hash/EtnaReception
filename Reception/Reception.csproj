@@ -8,4 +8,8 @@
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
       <PackageReference Include="Syncfusion.SfScheduler.WPF" Version="19.1.0.59" />
 </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookSoft.BLL\BookSoft.BLL.csproj" />
+    <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
+  </ItemGroup>
 </Project>

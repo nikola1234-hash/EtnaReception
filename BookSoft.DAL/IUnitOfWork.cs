@@ -10,5 +10,6 @@ namespace BookSoft.DAL
         StayTypesRepository StayType { get; }
         GuestRepository Guest { get; }
         ReservationRepository Reservation { get; }
+        RoomReservationRepository RoomReservation { get; }
     }
 }
