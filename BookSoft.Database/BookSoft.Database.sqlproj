@@ -99,6 +99,7 @@
     <Build Include="dbo\StoredProcedures\Booking\spBooking_CreateRoomReservation.sql" />
     <Build Include="dbo\StoredProcedures\Guest\spGuest_CreateNewGuest.sql" />
     <Build Include="dbo\StoredProcedures\Booking\spReception_LoadRoomScheduler.sql" />
+    <Build Include="dbo\StoredProcedures\Booking\spReceptionScheduler_CancelReservation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BookSoft.Database.refactorlog" />

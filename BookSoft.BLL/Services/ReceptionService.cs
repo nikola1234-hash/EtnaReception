@@ -20,5 +20,17 @@ namespace BookSoft.BLL.Services
             var rooms = _unit.RoomReservation.LoadRooms();
             return rooms;
         }
+
+        public int CancelReservation(int id)
+        {
+            int rows =_unit.RoomReservation.CancelReservation(id);
+            return rows;
+        }
+
+        public IEnumerable<RoomResource> LoadRoomResource()
+        {
+            var resources = _unit.RoomReservation.LoadRoomResources();
+            return resources;
+        }
     }
 }

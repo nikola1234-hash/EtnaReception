@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using BookSoft.BLL.Services;
+using BookSoft.Domain.Models;
 using Prism.Events;
 using Prism.Mvvm;
 using Reception.Events;
@@ -42,7 +45,8 @@ namespace Reception.ViewModels
         public SchedulerViewModel(IReceptionService receptionService, IEventAggregator eventAggregator)
         {
             _receptionService = receptionService;
-            InitializeScheduler();
+            InitializeResources();
+            InitializeBookings();
             DeleteBookingCommand = new DelegateCommand<object>(ExecuteDelete);
 
         }
@@ -52,21 +56,53 @@ namespace Reception.ViewModels
             var e = appointment as AppointmentDeletingEventArgs;
             if (e.Appointment.Id != null)
             {
+                var result = MessageBox.Show("Da li ste sigurni da zelite da otkazete rezervaciju?","",
+                    MessageBoxButton.YesNo);
                 var i = e.Appointment.ResourceIdCollection.FirstOrDefault();
-                int id = (int) i;
+                if (result == MessageBoxResult.Yes)
+                {
+                    var room = (RoomScheduler)i;
+                    if (room != null)
+                    {
+                        int rowsAffected = _receptionService.CancelReservation(room.ReservationId);
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Uspesno izbrisana rezervacija");
+                            Events.Clear();
+                            InitializeBookings();
+                        }
+                    }
+                 
+                }
+            }
+        }
 
+        private void InitializeResources()
+        {
+            Resources = new ObservableCollection<object>();
+            var roomResources = _receptionService.LoadRoomResource();
 
+            foreach (var room in roomResources)
+            {
+                var obj = new SchedulerResource()
+                {
+                    Name = room.RoomNumber,
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF")),
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9d65c9")),
+                    Id = room.Id
+                };
+                Resources.Add(obj);
             }
         }
 
 
-        private void InitializeScheduler()
+        private void InitializeBookings()
         {
             
-
-            Resources = new ObservableCollection<object>();
             Events = new ScheduleAppointmentCollection();
             var reservation = _receptionService.LoadRoomScheduler();
+           
+
             foreach (var item in reservation)
             {
                 if (item.StartDate != null && item.EndDate != null)
@@ -79,20 +115,11 @@ namespace Reception.ViewModels
                         Subject = ScheduleDetailsHelper.FormatSubject(item),
                         Notes = ScheduleDetailsHelper.FormatDetails(item),
 
-                        ResourceIdCollection = new ObservableCollection<object>() { item.Id },
+                        ResourceIdCollection = new ObservableCollection<object>() { item, item.Id },
                         AppointmentBackground = new SolidColorBrush(color: (Color)ColorConverter.ConvertFromString("#FFE671B8"))
                     };
                     Events.Add(appointments);
                 }
-
-                var obj = new SchedulerResource()
-                {
-                    Name = item.RoomNumber,
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF")),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9d65c9")),
-                    Id = item.Id
-                };
-                Resources.Add(obj);
             }
         }
     }

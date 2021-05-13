@@ -6,5 +6,7 @@ namespace BookSoft.BLL.Services
     public interface IReceptionService
     {
         IEnumerable<RoomScheduler> LoadRoomScheduler();
+        int CancelReservation(int id);
+        IEnumerable<RoomResource> LoadRoomResource();
     }
 }
