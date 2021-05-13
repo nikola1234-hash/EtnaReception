@@ -21,9 +21,19 @@
             ResourceCollection="{Binding Resources, UpdateSourceTrigger=PropertyChanged}"
             ResourceGroupType="Resource"
             ViewType="TimelineMonth">
+            <syncfusion:SfScheduler.CellContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Command="{Binding Source={x:Static Member=syncfusion:SchedulerCommands.Add}}"
+                        CommandParameter="{Binding}"
+                        CommandTarget="{Binding ElementName=Scheduler}"
+                        Header="Nova rezervacija" />
+                </ContextMenu>
+            </syncfusion:SfScheduler.CellContextMenu>
+
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="AppointmentDeleting">
-                    <b:InvokeCommandAction Command="{Binding DeleteBookingCommand}" PassEventArgsToCommand="True"/>
+                    <b:InvokeCommandAction Command="{Binding DeleteBookingCommand}" PassEventArgsToCommand="True" />
                 </b:EventTrigger>
             </b:Interaction.Triggers>
 
