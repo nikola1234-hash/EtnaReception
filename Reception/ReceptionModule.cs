@@ -3,6 +3,7 @@ using BookSoft.BLL.Services;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Reception.Dialogs;
 using Reception.Views;
 
 namespace Reception
@@ -25,6 +26,7 @@ namespace Reception
         {
             containerRegistry.RegisterForNavigation<ReceptionView>();
             containerRegistry.Register<IReceptionService, ReceptionService>();
+            containerRegistry.RegisterDialog<CreateNewReservationDialog, CreateNewReservationDialogViewModel>();
         }
     }
 }

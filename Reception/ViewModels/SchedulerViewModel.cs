@@ -12,6 +12,7 @@ using BookSoft.BLL.Services;
 using BookSoft.Domain.Models;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using Reception.Events;
 using Reception.Services;
 using Syncfusion.UI.Xaml.Scheduler;
@@ -21,6 +22,7 @@ namespace Reception.ViewModels
 {
     public class SchedulerViewModel : BindableBase
     {
+
         private ScheduleAppointmentCollection _events;
         public ScheduleAppointmentCollection Events
         {
@@ -36,18 +38,35 @@ namespace Reception.ViewModels
 
         private readonly IReceptionService _receptionService;
         public ICommand DeleteBookingCommand { get; }
-
-        public SchedulerViewModel()
+        public ICommand OpenEditor { get; }
+        private readonly IDialogService _dialogService;
+        public SchedulerViewModel(IDialogService dialogService)
         {
-
+            _dialogService = dialogService;
         }
 
-        public SchedulerViewModel(IReceptionService receptionService, IEventAggregator eventAggregator)
+        public SchedulerViewModel(IReceptionService receptionService, IEventAggregator eventAggregator, IDialogService dialogService)
         {
             _receptionService = receptionService;
+            _dialogService = dialogService;
             InitializeResources();
             InitializeBookings();
             DeleteBookingCommand = new DelegateCommand<object>(ExecuteDelete);
+            OpenEditor = new DelegateCommand<object>(ExecuteOpenEditor);
+
+        }
+
+        private void ExecuteOpenEditor(object obj)
+        {
+            var e = obj as AppointmentEditorOpeningEventArgs;
+            e.Cancel = true;
+            if (e.Appointment is null)
+            {
+                var p = new DialogParameters();
+                p.Add("dolazak", e.DateTime);
+
+                _dialogService.ShowDialog("CreateNewReservationDialog", p, result => {});
+            }
 
         }
 

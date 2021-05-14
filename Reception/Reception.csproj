@@ -11,5 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BookSoft.BLL\BookSoft.BLL.csproj" />
     <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
+    <ProjectReference Include="..\EditBookingControl\EditBookingControl.csproj" />
   </ItemGroup>
 </Project>
