@@ -59,12 +59,17 @@ namespace Reception.ViewModels
         private void ExecuteOpenEditor(object obj)
         {
             var e = obj as AppointmentEditorOpeningEventArgs;
+            var id = new object();
             e.Cancel = true;
+            if (e.DateTime.Date < DateTime.Now.Date)
+            {
+                //TODO: Some awesome message notification
+                return;
+            }
             if (e.Appointment is null)
             {
                 var p = new DialogParameters();
                 p.Add("dolazak", e.DateTime);
-
                 _dialogService.ShowDialog("CreateNewReservationDialog", p, result => {});
             }
 

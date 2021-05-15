@@ -1,5 +1,6 @@
 ﻿using BookSoft.BLL.Regions;
 using BookSoft.BLL.Services;
+using BookSoft.Domain.Models;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -26,6 +27,7 @@ namespace Reception
         {
             containerRegistry.RegisterForNavigation<ReceptionView>();
             containerRegistry.Register<IReceptionService, ReceptionService>();
+            containerRegistry.Register<IRoomService, RoomService>();
             containerRegistry.RegisterDialog<CreateNewReservationDialog, CreateNewReservationDialogViewModel>();
         }
     }

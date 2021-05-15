@@ -261,6 +261,7 @@ namespace Booking.ViewModels
             get { return SearchRooms.HasErrors == false; }
             set
             {
+                
                 CanExecute = value;
                 RaisePropertyChanged(nameof(CanExecute));
             }
