@@ -61,16 +61,25 @@ namespace Reception.ViewModels
             var e = obj as AppointmentEditorOpeningEventArgs;
             var id = new object();
             e.Cancel = true;
-            if (e.DateTime.Date < DateTime.Now.Date)
-            {
-                //TODO: Some awesome message notification
-                return;
-            }
+            //if (e.DateTime.Date < DateTime.Now.Date)
+            //{
+            //    //TODO: Some awesome message notification
+            //    return;
+            //}
             if (e.Appointment is null)
             {
                 var p = new DialogParameters();
                 p.Add("dolazak", e.DateTime);
                 _dialogService.ShowDialog("CreateNewReservationDialog", p, result => {});
+            }
+
+            if (e.Appointment != null)
+            {
+                var d = e.Appointment.ResourceIdCollection.FirstOrDefault();
+                var p = (RoomScheduler) d;
+                var parameters = new DialogParameters();
+                parameters.Add("roomScheduler", p);
+                _dialogService.ShowDialog("EditReservationDialogView", parameters, result => {});
             }
 
         }

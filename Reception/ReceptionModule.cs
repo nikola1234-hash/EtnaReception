@@ -28,7 +28,9 @@ namespace Reception
             containerRegistry.RegisterForNavigation<ReceptionView>();
             containerRegistry.Register<IReceptionService, ReceptionService>();
             containerRegistry.Register<IRoomService, RoomService>();
+            containerRegistry.Register<IStayTypeService, StayTypeService>();
             containerRegistry.RegisterDialog<CreateNewReservationDialog, CreateNewReservationDialogViewModel>();
+            containerRegistry.RegisterDialog<EditReservationDialogView, EditReservationDialogViewModel>();
         }
     }
 }
