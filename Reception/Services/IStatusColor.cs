@@ -10,6 +10,6 @@ namespace Reception.Services
     }
     public interface IStatusColor
     {
-        Color LoadColor(int id);
+        Color SetColor(int id);
     }
 }

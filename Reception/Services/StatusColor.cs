@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using System.Windows.Automation.Peers;
+﻿using System.Diagnostics.CodeAnalysis;
 using BookSoft.BLL.Services;
 using System.Windows.Media;
 
@@ -22,7 +18,7 @@ namespace Reception.Services
             _receptionService = receptionService;
         }
 
-        public Color LoadColor(int id)
+        public Color SetColor(int id)
         {
             Color color = new Color();
             if (id == 0) return color;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
+using System.Linq;
 using System.Windows.Input;
 using BookSoft.BLL.Services;
 using BookSoft.Domain.Models;
@@ -43,6 +44,13 @@ namespace Reception.Dialogs
             set { SetProperty(ref _statusList, value); }
         }
 
+        private int _selectedStatusIndex;
+
+        public int SelectedStatusIndex
+        {
+            get { return _selectedStatusIndex; }
+            set { SetProperty(ref _selectedStatusIndex, value); }
+        }
         public int StayTypeId { get; set; }
         private StatusModel _selectedStatusModel;
 
@@ -70,9 +78,9 @@ namespace Reception.Dialogs
             }
         }
 
-        private IEnumerable<Room> _rooms;
+        private IEnumerable<RoomResource> _rooms;
 
-        public IEnumerable<Room> Rooms
+        public IEnumerable<RoomResource> Rooms
         {
             get { return _rooms; }
             set { SetProperty(ref _rooms, value); }
@@ -94,9 +102,9 @@ namespace Reception.Dialogs
             set { SetProperty(ref _selectedStayType, value); }
         }
 
-        private Room _selectedRoom;
+        private RoomResource _selectedRoom;
 
-        public Room SelectedRoom
+        public RoomResource SelectedRoom
         {
             get { return _selectedRoom; }
             set { SetProperty(ref _selectedRoom, value); }
@@ -160,12 +168,18 @@ namespace Reception.Dialogs
 
         private void Initialize()
         {
+            //TODO: Check this out
             var statusList = _receptionService.LoadStatus();
             StatusList = new ObservableCollection<StatusModel>(statusList);
-            SelectedStatusModel = _receptionService.LoadStatusByReservationId(ReservationId);
+            var status = _receptionService.LoadStatusByReservationId(ReservationId);
+            SelectedStatusModel = _receptionService.LoadStatus(status.Id).FirstOrDefault();
             var types = _stayTypeService.GetAllTypes();
             StayTypes = new ObservableCollection<StayType>(types);
             SelectedStayType = _stayTypeService.GetById(StayTypeId);
+            SelectedStatusIndex = status.Id - 1;
+            var rooms = _receptionService.LoadRoomResource();
+            Rooms = new ObservableCollection<RoomResource>(rooms);
+
         }
 
 

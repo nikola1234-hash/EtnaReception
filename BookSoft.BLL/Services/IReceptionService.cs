@@ -8,7 +8,7 @@ namespace BookSoft.BLL.Services
         IEnumerable<RoomScheduler> LoadRoomScheduler();
         int CancelReservation(int id);
         IEnumerable<RoomResource> LoadRoomResource();
-        IEnumerable<StatusModel> LoadStatus();
+        IEnumerable<StatusModel> LoadStatus(int id = 0);
         StatusModel LoadStatusByReservationId(int id);
     }
 }

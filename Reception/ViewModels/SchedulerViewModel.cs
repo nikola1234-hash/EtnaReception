@@ -144,7 +144,7 @@ namespace Reception.ViewModels
             {
                 if (item.StartDate != null && item.EndDate != null)
                 {
-                    var color = _statusColor.LoadColor(item.ReservationId);
+                    var color = _statusColor.SetColor(item.ReservationId);
                     var appointments = new ScheduleAppointment()
                     {
                         StartTime = (DateTime)item.StartDate,

@@ -57,6 +57,11 @@ namespace BookSoft.DAL.Repositories
             var statusList = _data.LoadData<StatusModel, dynamic>(LOAD_RESERVATION_STATUS, new { });
             return statusList;
         }
+        public IEnumerable<StatusModel> LoadStatusById(int id)
+        {
+            var statusList = _data.LoadData<StatusModel, dynamic>("spScheduler_LoadStatusById", new { id});
+            return statusList;
+        }
 
         public StatusModel LaodStatusByReservation(int id)
         {

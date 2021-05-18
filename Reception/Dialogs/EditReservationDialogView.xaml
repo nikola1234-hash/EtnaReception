@@ -9,8 +9,32 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    FontSize="18"
     mc:Ignorable="d">
     <Grid>
-        <DatePicker SelectedDate="{Binding StartDate}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <TextBlock Text="Datum od:" />
+            <DatePicker Grid.Column="0" SelectedDate="{Binding StartDate}" />
+            <TextBlock Text="Datum do:" />
+            <DatePicker Grid.Column="0" SelectedDate="{Binding EndDate}" />
+            <TextBlock Text="Broj sobe:" />
+            <ComboBox
+                DisplayMemberPath="RoomNumber"
+                ItemsSource="{Binding Rooms}"
+                SelectedItem="{Binding SelectedRoom}" />
+            <TextBlock Text="Broj sobe:" />
+            <ComboBox
+                DisplayMemberPath="Status"
+                ItemsSource="{Binding StatusList}"
+                SelectedIndex="{Binding SelectedStatusIndex}"
+                SelectedItem="{Binding SelectedStatusModel}" />
+
+        </StackPanel>
+
+
     </Grid>
 </UserControl>
