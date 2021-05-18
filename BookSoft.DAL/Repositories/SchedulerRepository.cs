@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using BookSoft.Domain;
 using BookSoft.Domain.Models;
@@ -15,8 +16,11 @@ namespace BookSoft.DAL.Repositories
         private const string LOAD_ROOMS = "spReception_LoadRoomScheduler";
         private const string CANCEL_RESERVATION = "spReceptionScheduler_CancelReservation";
         private const string LOAD_RESERVATION_STATUS = "SELECT * FROM dbo.Status_Catalog";
-        //make sp
         private const string UPDATE_RESERVATION_STATUS = "spReceptionScheduler_UpdateStatus";
+        private const string UPDATE_ROOM_RESERVATION = "spScheduler_UpdateRoomReservationTable";
+        private const string UPDATE_RESERVATION_DATES = "spReceptionScheduler_UpdateReservation";
+
+        private const string LOAD_STATUS_BY_RESERVATION_ID = "spScheduler_LoadStatusByReservationId";
 
 
         public SchedulerRepository(IDataService data)
@@ -54,9 +58,24 @@ namespace BookSoft.DAL.Repositories
             var statusList = _data.LoadData<StatusModel, dynamic>(LOAD_RESERVATION_STATUS, new { });
             return statusList;
         }
-        public void UpdateReservation(object details)
+
+        public StatusModel LaodStatusByReservation(int id)
         {
-            var reservation = "";
+            var output = _data.LoadData<StatusModel, dynamic>(LOAD_STATUS_BY_RESERVATION_ID, new {reservationId = id});
+            return output.FirstOrDefault();
+
         }
+        public int UpdateReservation(object details)
+        {
+            int rows = _data.SaveData(UPDATE_RESERVATION_DATES, details);
+            return rows;
+        }
+
+        public int UpdateRoomReservationTable(object details)
+        {
+            int rows = _data.SaveData(UPDATE_ROOM_RESERVATION, details);
+            return rows;
+        }
+
     }
 }

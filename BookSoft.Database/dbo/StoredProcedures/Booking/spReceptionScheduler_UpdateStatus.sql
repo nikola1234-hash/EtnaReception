@@ -5,6 +5,5 @@
 
 	BEGIN
 		UPDATE dbo.Reservation_Status_Event SET StatusId = @statusId where ReservationId = @reservationId;
-
 		RETURN @@ROWCOUNT;
 	END

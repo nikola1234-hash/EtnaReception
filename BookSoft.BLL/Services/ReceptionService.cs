@@ -30,5 +30,17 @@ namespace BookSoft.BLL.Services
             var resources = _unit.RoomReservation.LoadRoomResources();
             return resources;
         }
+
+        public IEnumerable<StatusModel> LoadStatus()
+        {
+            var statuses = _unit.RoomReservation.LoadStatus();
+            return statuses;
+        }
+
+        public StatusModel LoadStatusByReservationId(int id)
+        {
+            var output = _unit.RoomReservation.LaodStatusByReservation(id);
+            return output;
+        }
     }
 }

@@ -40,15 +40,18 @@ namespace Reception.ViewModels
         public ICommand DeleteBookingCommand { get; }
         public ICommand OpenEditor { get; }
         private readonly IDialogService _dialogService;
-        public SchedulerViewModel(IDialogService dialogService)
+        private readonly IStatusColor _statusColor;
+        public SchedulerViewModel(IDialogService dialogService, IStatusColor statusColor)
         {
             _dialogService = dialogService;
+            _statusColor = statusColor;
         }
 
-        public SchedulerViewModel(IReceptionService receptionService, IEventAggregator eventAggregator, IDialogService dialogService)
+        public SchedulerViewModel(IReceptionService receptionService, IEventAggregator eventAggregator, IDialogService dialogService, IStatusColor statusColor)
         {
             _receptionService = receptionService;
             _dialogService = dialogService;
+            _statusColor = statusColor;
             InitializeResources();
             InitializeBookings();
             DeleteBookingCommand = new DelegateCommand<object>(ExecuteDelete);
@@ -134,22 +137,23 @@ namespace Reception.ViewModels
             
             Events = new ScheduleAppointmentCollection();
             var reservation = _receptionService.LoadRoomScheduler();
-           
+
+            
 
             foreach (var item in reservation)
             {
                 if (item.StartDate != null && item.EndDate != null)
                 {
-
+                    var color = _statusColor.LoadColor(item.ReservationId);
                     var appointments = new ScheduleAppointment()
                     {
                         StartTime = (DateTime)item.StartDate,
                         EndTime = (DateTime)item.EndDate,
                         Subject = ScheduleDetailsHelper.FormatSubject(item),
                         Notes = ScheduleDetailsHelper.FormatDetails(item),
-
+                        
                         ResourceIdCollection = new ObservableCollection<object>() { item, item.Id },
-                        AppointmentBackground = new SolidColorBrush(color: (Color)ColorConverter.ConvertFromString("#FFE671B8"))
+                        AppointmentBackground = new SolidColorBrush(color)
                     };
                     Events.Add(appointments);
                 }

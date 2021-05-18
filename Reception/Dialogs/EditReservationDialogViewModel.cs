@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Net.Http.Headers;
+using System.Collections.ObjectModel;
+using BookSoft.BLL.Services;
 using BookSoft.Domain.Models;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -13,7 +14,7 @@ namespace Reception.Dialogs
         private bool _isDirty;
         public bool IsDirty
         {
-            get { return _isDirty; }
+            get => _isDirty;
             set { SetProperty(ref _isDirty, value); }
         }
 
@@ -33,6 +34,29 @@ namespace Reception.Dialogs
             }
         }
 
+        private ObservableCollection<StatusModel> _statusList;
+
+        public ObservableCollection<StatusModel> StatusList
+        {
+            get { return _statusList; }
+            set { SetProperty(ref _statusList, value); }
+        }
+
+        public int ReservationId { get; set; }
+        private DateTime _endDate;
+
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set
+            {
+                if (_endDate > DateTime.MinValue)
+                {
+                    SetIsDirty(ref _endDate, value);
+                }
+                SetProperty(ref _endDate, value);
+            }
+        }
 
         #endregion
 
@@ -44,7 +68,6 @@ namespace Reception.Dialogs
             {
                 IsDirty = true;
             }
-            
         }
 
         #endregion
@@ -52,9 +75,13 @@ namespace Reception.Dialogs
 
         #region Constructor
 
-        public EditReservationDialogViewModel()
-        {
+        private readonly IReceptionService _receptionService;
+        private readonly IEditScheduleService _editScheduleService;
 
+        public EditReservationDialogViewModel(IEditScheduleService editScheduleService, IReceptionService receptionService)
+        {
+            _editScheduleService = editScheduleService;
+            _receptionService = receptionService;
         }
 
         #endregion
@@ -75,6 +102,9 @@ namespace Reception.Dialogs
         {
             var t = parameters.GetValue<RoomScheduler>("roomScheduler");
             StartDate = (DateTime)t.StartDate;
+            EndDate = (DateTime) t.EndDate;
+            ReservationId = t.ReservationId;
+            StatusList = new ObservableCollection<StatusModel>(_receptionService.LoadStatus()); 
         }
 
         public string Title => "Izmeni";

@@ -5,6 +5,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using Reception.Dialogs;
+using Reception.Services;
 using Reception.Views;
 
 namespace Reception
@@ -29,6 +30,8 @@ namespace Reception
             containerRegistry.Register<IReceptionService, ReceptionService>();
             containerRegistry.Register<IRoomService, RoomService>();
             containerRegistry.Register<IStayTypeService, StayTypeService>();
+            containerRegistry.Register<IEditScheduleService, EditScheduleService>();
+            containerRegistry.Register<IStatusColor, StatusColor>();
             containerRegistry.RegisterDialog<CreateNewReservationDialog, CreateNewReservationDialogViewModel>();
             containerRegistry.RegisterDialog<EditReservationDialogView, EditReservationDialogViewModel>();
         }
