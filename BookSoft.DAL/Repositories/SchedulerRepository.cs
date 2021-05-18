@@ -49,7 +49,6 @@ namespace BookSoft.DAL.Repositories
         public int ChangeReservationStatus(int id, int statusId)
         {
             int rows = _data.SaveData(UPDATE_RESERVATION_STATUS, new {reservationId = id, statusId = statusId});
-                //TODO: Throw exception if rows is 0
             return rows;
         }
 

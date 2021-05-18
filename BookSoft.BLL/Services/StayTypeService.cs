@@ -27,5 +27,11 @@ namespace BookSoft.BLL.Services
 
             return types;
         }
+
+        public StayType GetById(int id)
+        {
+            var type = _unit.StayType.GetById(id);
+            return type;
+        }
     }
 }

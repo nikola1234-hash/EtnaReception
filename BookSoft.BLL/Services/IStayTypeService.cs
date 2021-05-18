@@ -6,5 +6,6 @@ namespace BookSoft.BLL.Services
     public interface IStayTypeService
     {
         IEnumerable<StayType> GetAllTypes();
+        StayType GetById(int id);
     }
 }

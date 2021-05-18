@@ -3,7 +3,7 @@ AS
 BEGIn
 
 SELECT        Room.Id, RoomNumber, RoomReservation.Persons, Reservation.StartDate, 
-              Reservation.EndDate, StayType.Title, Reservation.TotalPrice, Reservation.DiscountPercent,
+              Reservation.EndDate, StayType.Title, StayTypeId ,Reservation.TotalPrice, Reservation.DiscountPercent,
 			  Guest.FirstName, Guest.LastName, Guest.Phone, Guest.Email, Guest.[Address], Reservation.Id as ReservationId
 FROM            Room  LEFT JOIN
                          RoomReservation ON RoomReservation.RoomId = Room.Id 
