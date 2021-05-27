@@ -11,5 +11,6 @@ namespace BookSoft.DAL
         GuestRepository Guest { get; }
         ReservationRepository Reservation { get; }
         SchedulerRepository RoomReservation { get; }
+        RoomReservationRepository RoomReservationRepository { get; }
     }
 }

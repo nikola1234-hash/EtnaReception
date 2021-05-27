@@ -111,6 +111,14 @@ namespace Reception.Dialogs
             set { SetProperty(ref _selectedRoom, value); }
         }
 
+        private int _selectedRoomIndex;
+
+        public int SelectedRoomIndex
+        {
+            get { return _selectedRoomIndex; }
+            set { SetProperty(ref _selectedRoomIndex, value); }
+        }
+
         #endregion
 
         #region PrivateMethods
@@ -195,8 +203,10 @@ namespace Reception.Dialogs
             SelectedStayType = _stayTypeService.GetById(StayTypeId);
             SelectedStatusIndex = statusList.FindIndex(s => s.Id == status.Id);
 
-            var rooms = _receptionService.LoadRoomResource();
+            var rooms = _receptionService.LoadRoomResource().ToList();
             Rooms = new ObservableCollection<RoomResource>(rooms);
+            var roomReservationDetails = _editScheduleService.LoadRoomReservationDetails(ReservationId);
+            SelectedRoomIndex = rooms.FindIndex(c => c.Id == roomReservationDetails.RoomId);
 
         }
 

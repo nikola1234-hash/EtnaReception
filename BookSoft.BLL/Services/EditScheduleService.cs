@@ -1,6 +1,7 @@
 ﻿using System;
 using BookSoft.DAL;
 using BookSoft.DAL.Exceptions;
+using BookSoft.Domain.Models;
 
 namespace BookSoft.BLL.Services
 {
@@ -52,6 +53,12 @@ namespace BookSoft.BLL.Services
             {
                 throw new ErrorUpdatingReservationStatusException();
             }
+        }
+
+        public RoomReservation LoadRoomReservationDetails(int reservationId)
+        {
+            var output = _unit.RoomReservationRepository.LoadRoomReservationByResId(reservationId);
+            return output;
         }
     }
 }

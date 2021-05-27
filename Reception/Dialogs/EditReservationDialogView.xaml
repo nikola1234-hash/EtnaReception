@@ -25,6 +25,7 @@
             <ComboBox
                 DisplayMemberPath="RoomNumber"
                 ItemsSource="{Binding Rooms}"
+                SelectedIndex="{Binding SelectedRoomIndex}"
                 SelectedItem="{Binding SelectedRoom}" />
             <TextBlock Text="Broj sobe:" />
             <ComboBox
