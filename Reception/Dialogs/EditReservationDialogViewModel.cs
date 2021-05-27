@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
+using System.Windows.Documents;
 using System.Windows.Input;
 using BookSoft.BLL.Services;
 using BookSoft.Domain.Models;
@@ -165,18 +166,36 @@ namespace Reception.Dialogs
             Initialize();
 
         }
+        //TODO: Separate in different class
+        private static int FindIndex<T>(IEnumerable<T> items, Predicate<T> predicate )
+        {
+            int index = 0;
+            foreach (var item in items)
+            {
+                if(predicate(item))
+                    break;
+                index++;
+            }
+
+            return index;
+        }
 
         private void Initialize()
         {
             //TODO: Check this out
             var statusList = _receptionService.LoadStatus();
             StatusList = new ObservableCollection<StatusModel>(statusList);
+
             var status = _receptionService.LoadStatusByReservationId(ReservationId);
             SelectedStatusModel = _receptionService.LoadStatus(status.Id).FirstOrDefault();
+
             var types = _stayTypeService.GetAllTypes();
             StayTypes = new ObservableCollection<StayType>(types);
+
             SelectedStayType = _stayTypeService.GetById(StayTypeId);
-            SelectedStatusIndex = status.Id - 1;
+            var selectedStatusIndex = FindIndex(statusList, c => c.Id == status.Id);
+            SelectedStatusIndex = selectedStatusIndex;
+
             var rooms = _receptionService.LoadRoomResource();
             Rooms = new ObservableCollection<RoomResource>(rooms);
 
@@ -194,7 +213,8 @@ namespace Reception.Dialogs
 
         public DelegateCommand UpdateCommand { get; }
         private void UpdateCommandExecute()
-        {
+        {   
+                //TODO:
             //Update db
         }
         private bool CanUpdateExecute()
