@@ -183,7 +183,7 @@ namespace Reception.Dialogs
         private void Initialize()
         {
             //TODO: Check this out
-            var statusList = _receptionService.LoadStatus();
+            var statusList = _receptionService.LoadStatus().ToList();
             StatusList = new ObservableCollection<StatusModel>(statusList);
 
             var status = _receptionService.LoadStatusByReservationId(ReservationId);
@@ -193,8 +193,7 @@ namespace Reception.Dialogs
             StayTypes = new ObservableCollection<StayType>(types);
 
             SelectedStayType = _stayTypeService.GetById(StayTypeId);
-            var selectedStatusIndex = FindIndex(statusList, c => c.Id == status.Id);
-            SelectedStatusIndex = selectedStatusIndex;
+            SelectedStatusIndex = statusList.FindIndex(s => s.Id == status.Id);
 
             var rooms = _receptionService.LoadRoomResource();
             Rooms = new ObservableCollection<RoomResource>(rooms);
