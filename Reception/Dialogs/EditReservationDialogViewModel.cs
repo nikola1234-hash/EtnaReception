@@ -12,6 +12,10 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Syncfusion.Windows.Controls;
 
+/// <summary>
+/// TODO IsDirty ne dodeljuje value kako treba Date i na Selected room se kako treba 3.06
+/// </summary>
+
 namespace Reception.Dialogs
 {
     public class EditReservationDialogViewModel : BindableBase, IDialogAware
@@ -30,12 +34,7 @@ namespace Reception.Dialogs
             get { return _startDate; }
             set
             {
-                if (_startDate > DateTime.MinValue)
-                {
-                    SetIsDirty(ref _startDate, value);
-                }
-
-                SetProperty(ref _startDate, value);
+               IsDirty = SetProperty(ref _startDate, value);
             }
         }
         private ObservableCollection<StatusModel> _statusList;
@@ -70,12 +69,7 @@ namespace Reception.Dialogs
             get => _endDate;
             set
             {
-                if (_endDate > DateTime.MinValue)
-                {
-                    SetIsDirty(ref _endDate, value);
-                }
-
-                SetProperty(ref _endDate, value);
+                IsDirty = SetProperty(ref _endDate, value);
             }
         }
 
@@ -104,11 +98,19 @@ namespace Reception.Dialogs
         }
 
         private RoomResource _selectedRoom;
+        private RoomResource _previousSelectedRoom;
 
         public RoomResource SelectedRoom
         {
             get { return _selectedRoom; }
-            set { SetProperty(ref _selectedRoom, value); }
+            set
+            {
+                if (_selectedRoom != null)
+                {
+                    IsDirty = SetProperty(ref _selectedRoom, value);
+                }
+
+            }
         }
 
         private int _selectedRoomIndex;
@@ -123,13 +125,7 @@ namespace Reception.Dialogs
 
         #region PrivateMethods
 
-        private void SetIsDirty<T>(ref T name, T value)
-        {
-            if (!name.Equals(value))
-            {
-                IsDirty = true;
-            }
-        }
+
 
         #endregion
 
@@ -174,19 +170,6 @@ namespace Reception.Dialogs
             Initialize();
 
         }
-        //TODO: Separate in different class
-        private static int FindIndex<T>(IEnumerable<T> items, Predicate<T> predicate )
-        {
-            int index = 0;
-            foreach (var item in items)
-            {
-                if(predicate(item))
-                    break;
-                index++;
-            }
-
-            return index;
-        }
 
         private void Initialize()
         {
@@ -197,17 +180,26 @@ namespace Reception.Dialogs
             var status = _receptionService.LoadStatusByReservationId(ReservationId);
             SelectedStatusModel = _receptionService.LoadStatus(status.Id).FirstOrDefault();
 
+            LoadStayTypes(statusList, status);
+            
+            LoadRooms();
+        }
+
+        private void LoadRooms()
+        {
+            var rooms = _receptionService.LoadRoomResource().ToList();
+            Rooms = new ObservableCollection<RoomResource>(rooms);
+            var roomReservationDetails = _editScheduleService.LoadRoomReservationDetails(ReservationId);
+            SelectedRoomIndex = rooms.FindIndex(c => c.Id == roomReservationDetails.RoomId);
+        }
+
+        private void LoadStayTypes(List<StatusModel> statusList, StatusModel status)
+        {
             var types = _stayTypeService.GetAllTypes();
             StayTypes = new ObservableCollection<StayType>(types);
 
             SelectedStayType = _stayTypeService.GetById(StayTypeId);
             SelectedStatusIndex = statusList.FindIndex(s => s.Id == status.Id);
-
-            var rooms = _receptionService.LoadRoomResource().ToList();
-            Rooms = new ObservableCollection<RoomResource>(rooms);
-            var roomReservationDetails = _editScheduleService.LoadRoomReservationDetails(ReservationId);
-            SelectedRoomIndex = rooms.FindIndex(c => c.Id == roomReservationDetails.RoomId);
-
         }
 
 

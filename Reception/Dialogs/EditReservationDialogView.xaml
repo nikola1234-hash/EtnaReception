@@ -14,27 +14,45 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Datum od:" />
-            <DatePicker Grid.Column="0" SelectedDate="{Binding StartDate}" />
-            <TextBlock Text="Datum do:" />
-            <DatePicker Grid.Column="0" SelectedDate="{Binding EndDate}" />
-            <TextBlock Text="Broj sobe:" />
-            <ComboBox
-                DisplayMemberPath="RoomNumber"
-                ItemsSource="{Binding Rooms}"
-                SelectedIndex="{Binding SelectedRoomIndex}"
-                SelectedItem="{Binding SelectedRoom}" />
-            <TextBlock Text="Broj sobe:" />
-            <ComboBox
-                DisplayMemberPath="Status"
-                ItemsSource="{Binding StatusList}"
-                SelectedIndex="{Binding SelectedStatusIndex}"
-                SelectedItem="{Binding SelectedStatusModel}" />
-
-        </StackPanel>
+        <Border
+            Grid.Column="0"
+            MinWidth="200"
+            Background="White"
+            CornerRadius="15">
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="15"
+                    Direction="15"
+                    ShadowDepth="0"
+                    Color="White" />
+            </Border.Effect>
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock Text="Datum od:" />
+                <DatePicker Grid.Column="0" SelectedDate="{Binding StartDate}" />
+                <TextBlock Text="Datum do:" />
+                <DatePicker Grid.Column="0" SelectedDate="{Binding EndDate}" />
+                <TextBlock Text="Broj sobe:" />
+                <ComboBox
+                    DisplayMemberPath="RoomNumber"
+                    ItemsSource="{Binding Rooms}"
+                    SelectedIndex="{Binding SelectedRoomIndex}"
+                    SelectedItem="{Binding SelectedRoom}" />
+                <TextBlock Text="Status:" />
+                <ComboBox
+                    DisplayMemberPath="Status"
+                    ItemsSource="{Binding StatusList}"
+                    SelectedIndex="{Binding SelectedStatusIndex}"
+                    SelectedItem="{Binding SelectedStatusModel}" />
+                <Button
+                    Margin="20,180,20,0"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding UpdateCommand}">
+                    Update
+                </Button>
+            </StackPanel>
+        </Border>
 
 
     </Grid>
