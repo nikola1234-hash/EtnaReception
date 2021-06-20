@@ -11,9 +11,9 @@ namespace BookSoft.BLL.Services
 
     public interface IEditScheduleService
     {
-        void UpdateReservationDates(DateTime startDate, DateTime endDate, int reservationId);
-        void UpdateRoomReservationDetails(int reservationId, int roomId, int stayTypeId, int persons);
-        void UpdateReservationStatus(int reservationId, int statusId);
+        UpdateStatus UpdateReservationDates(DateTime startDate, DateTime endDate, int reservationId);
+        UpdateStatus UpdateRoomReservationDetails(int reservationId, int roomId, int stayTypeId, int persons);
+        UpdateStatus UpdateReservationStatus(int reservationId, int statusId);
         RoomReservation LoadRoomReservationDetails(int reservationId);
     }
 }

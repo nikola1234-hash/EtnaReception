@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BookSoft.DAL\BookSoft.DAL.csproj" />
     <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
   </ItemGroup>

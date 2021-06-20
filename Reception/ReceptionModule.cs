@@ -6,6 +6,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using Reception.Dialogs;
 using Reception.Services;
+using Reception.Services.Facade;
 using Reception.Views;
 
 namespace Reception
@@ -34,6 +35,8 @@ namespace Reception
             containerRegistry.Register<IStatusColor, StatusColor>();
             containerRegistry.RegisterDialog<CreateNewReservationDialog, CreateNewReservationDialogViewModel>();
             containerRegistry.RegisterDialog<EditReservationDialogView, EditReservationDialogViewModel>();
+
+            containerRegistry.Register<IUpdateReservationFacade, UpdateReservationFacade>();
         }
     }
 }

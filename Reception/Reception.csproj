@@ -5,6 +5,7 @@
     <AssemblyName>Reception</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
       <PackageReference Include="Syncfusion.SfScheduler.WPF" Version="19.1.0.59" />
 </ItemGroup>

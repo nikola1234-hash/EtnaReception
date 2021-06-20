@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using BookSoft.BLL.Services;
@@ -10,6 +11,7 @@ using BookSoft.Domain.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using Reception.Services.Facade;
 using Syncfusion.Windows.Controls;
 
 /// <summary>
@@ -34,7 +36,15 @@ namespace Reception.Dialogs
             get { return _startDate; }
             set
             {
-               IsDirty = SetProperty(ref _startDate, value);
+                if (_startDate <= DateTime.MinValue)
+                {
+                    SetProperty(ref _startDate, value);
+                }
+                else
+                {
+                    IsDirty = SetProperty(ref _startDate, value);
+                }
+              
             }
         }
         private ObservableCollection<StatusModel> _statusList;
@@ -69,6 +79,10 @@ namespace Reception.Dialogs
             get => _endDate;
             set
             {
+                if (_endDate < DateTime.MinValue)
+                {
+                    SetProperty(ref _endDate, value);
+                }
                 IsDirty = SetProperty(ref _endDate, value);
             }
         }
@@ -78,7 +92,10 @@ namespace Reception.Dialogs
         public IEnumerable<RoomResource> Rooms
         {
             get { return _rooms; }
-            set { SetProperty(ref _rooms, value); }
+            set
+            {
+                SetProperty(ref _rooms, value);
+            }
         }
 
         private IEnumerable<StayType> _stayTypes;
@@ -99,13 +116,23 @@ namespace Reception.Dialogs
 
         private RoomResource _selectedRoom;
         private RoomResource _previousSelectedRoom;
+        private int _persons;
 
+        public int Persons
+        {
+            get { return _persons; }
+            set { SetProperty(ref _persons, value); }
+        }
         public RoomResource SelectedRoom
         {
             get { return _selectedRoom; }
             set
             {
-                if (_selectedRoom != null)
+                if (_selectedRoom is null)
+                {
+                    SetProperty(ref _selectedRoom, value);
+                }
+                else
                 {
                     IsDirty = SetProperty(ref _selectedRoom, value);
                 }
@@ -121,6 +148,13 @@ namespace Reception.Dialogs
             set { SetProperty(ref _selectedRoomIndex, value); }
         }
 
+        private int _selectedStayTypeInde;
+
+        public int SelectedStayTypeIndex
+        {
+            get { return _selectedStayTypeInde; }
+            set { SetProperty(ref _selectedStayTypeInde, value); }
+        }
         #endregion
 
         #region PrivateMethods
@@ -135,13 +169,16 @@ namespace Reception.Dialogs
         private readonly IReceptionService _receptionService;
         private readonly IEditScheduleService _editScheduleService;
         private readonly IStayTypeService _stayTypeService;
+        private readonly IUpdateReservationFacade _updateReservationFacade;
         public EditReservationDialogViewModel(IEditScheduleService editScheduleService,
-            IReceptionService receptionService, IStayTypeService stayTypeService)
+            IReceptionService receptionService, IStayTypeService stayTypeService, IUpdateReservationFacade updateReservationFacade)
         {
             _editScheduleService = editScheduleService;
             _receptionService = receptionService;
             _stayTypeService = stayTypeService;
+            _updateReservationFacade = updateReservationFacade;
             UpdateCommand = new DelegateCommand(UpdateCommandExecute, CanUpdateExecute).ObservesCanExecute(()=> IsDirty);
+            
         }
 
 
@@ -157,7 +194,7 @@ namespace Reception.Dialogs
 
         public void OnDialogClosed()
         {
-
+            
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
@@ -179,9 +216,9 @@ namespace Reception.Dialogs
 
             var status = _receptionService.LoadStatusByReservationId(ReservationId);
             SelectedStatusModel = _receptionService.LoadStatus(status.Id).FirstOrDefault();
-
-            LoadStayTypes(statusList, status);
             
+            LoadStayTypes(statusList, status);
+
             LoadRooms();
         }
 
@@ -189,17 +226,23 @@ namespace Reception.Dialogs
         {
             var rooms = _receptionService.LoadRoomResource().ToList();
             Rooms = new ObservableCollection<RoomResource>(rooms);
-            var roomReservationDetails = _editScheduleService.LoadRoomReservationDetails(ReservationId);
+            RoomReservation roomReservationDetails = _editScheduleService.LoadRoomReservationDetails(ReservationId);
             SelectedRoomIndex = rooms.FindIndex(c => c.Id == roomReservationDetails.RoomId);
+            //Populate person TextBox
+            Persons = roomReservationDetails.Persons;
+
+            
         }
 
         private void LoadStayTypes(List<StatusModel> statusList, StatusModel status)
         {
-            var types = _stayTypeService.GetAllTypes();
+            var types = _stayTypeService.GetAllTypes().ToList();
             StayTypes = new ObservableCollection<StayType>(types);
 
             SelectedStayType = _stayTypeService.GetById(StayTypeId);
+            SelectedStayTypeIndex = types.FindIndex(i => i.Id == StayTypeId);
             SelectedStatusIndex = statusList.FindIndex(s => s.Id == status.Id);
+            
         }
 
 
@@ -217,6 +260,18 @@ namespace Reception.Dialogs
         {   
                 //TODO:
             //Update db
+            var updateStatus = _updateReservationFacade.UpdateReservation(StartDate, EndDate, ReservationId, SelectedStatusModel.Id,
+                SelectedRoom.Id, SelectedStayType.Id, Persons);
+            if (updateStatus == UpdateStatus.Error)
+            {
+                MessageBox.Show("Greska u cuvanju podataka!");
+            }
+
+            if (updateStatus == UpdateStatus.Done)
+            {
+                MessageBox.Show("Uspesno izmenjen zapis.");
+                Close();
+            }
         }
         private bool CanUpdateExecute()
         {
@@ -224,5 +279,9 @@ namespace Reception.Dialogs
         }
         #endregion
 
+        private void Close()
+        {
+            RequestClose?.Invoke(null);
+        }
     }
 }

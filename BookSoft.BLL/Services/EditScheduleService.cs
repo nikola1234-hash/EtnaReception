@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using BookSoft.DAL;
 using BookSoft.DAL.Exceptions;
 using BookSoft.Domain.Models;
@@ -14,22 +15,23 @@ namespace BookSoft.BLL.Services
             _unit = unit;
         }
 
-        public void UpdateReservationDates(DateTime startDate, DateTime endDate, int reservationId)
+        public UpdateStatus UpdateReservationDates(DateTime startDate, DateTime endDate, int reservationId)
         {
             var details = new
             {
                 startDate,
                 endDate,
-                reservationId
+                id = reservationId
             };
             var rows = _unit.RoomReservation.UpdateReservation(details);
-            if (rows == 0)
+            if (rows == 1)
             {
-                throw new ErrorUpdatingReservationException();
+                return UpdateStatus.Done;
             }
+            return UpdateStatus.Error;
         }
 
-        public void UpdateRoomReservationDetails(int reservationId, int roomId, int stayTypeId, int persons)
+        public UpdateStatus UpdateRoomReservationDetails(int reservationId, int roomId, int stayTypeId, int persons)
         {
             var details = new
             {
@@ -40,19 +42,24 @@ namespace BookSoft.BLL.Services
             };
 
             var rows = _unit.RoomReservation.UpdateRoomReservationTable(details);
-            if (rows == 0)
+            if (rows == 1)
             {
-                throw new ErrorUpdatingRoomReservationException();
+                return UpdateStatus.Done;
             }
+
+            return UpdateStatus.Error;
         }
 
-        public void UpdateReservationStatus(int reservationId, int statusId)
+        public UpdateStatus UpdateReservationStatus(int reservationId, int statusId)
         {
             var rows =_unit.RoomReservation.ChangeReservationStatus(reservationId, statusId);
-            if (rows == 0)
+
+            if (rows == 1)
             {
-                throw new ErrorUpdatingReservationStatusException();
+                return UpdateStatus.Done;
             }
+
+            return UpdateStatus.Error;
         }
 
         public RoomReservation LoadRoomReservationDetails(int reservationId)

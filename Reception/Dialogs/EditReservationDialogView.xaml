@@ -39,14 +39,23 @@
                     ItemsSource="{Binding Rooms}"
                     SelectedIndex="{Binding SelectedRoomIndex}"
                     SelectedItem="{Binding SelectedRoom}" />
+                <TextBlock Text="Broj osoba" />
+                <TextBox Text="{Binding Persons}" />
+                <TextBlock Text="Tip smestaja" />
+                <ComboBox
+                    DisplayMemberPath="Title"
+                    ItemsSource="{Binding StayTypes}"
+                    SelectedIndex="{Binding SelectedStayTypeIndex}"
+                    SelectedItem="{Binding SelectedStayType}" />
                 <TextBlock Text="Status:" />
                 <ComboBox
                     DisplayMemberPath="Status"
                     ItemsSource="{Binding StatusList}"
                     SelectedIndex="{Binding SelectedStatusIndex}"
                     SelectedItem="{Binding SelectedStatusModel}" />
+
                 <Button
-                    Margin="20,180,20,0"
+                    Margin="20,60,20,0"
                     VerticalAlignment="Bottom"
                     Command="{Binding UpdateCommand}">
                     Update
