@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
@@ -13,5 +13,8 @@
     <ProjectReference Include="..\BookSoft.BLL\BookSoft.BLL.csproj" />
     <ProjectReference Include="..\BookSoft.Domain\BookSoft.Domain.csproj" />
     <ProjectReference Include="..\EditBookingControl\EditBookingControl.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\NewFolder\" />
   </ItemGroup>
 </Project>

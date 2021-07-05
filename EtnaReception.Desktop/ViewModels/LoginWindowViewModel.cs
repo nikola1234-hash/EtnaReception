@@ -16,7 +16,6 @@ namespace EtnaReception.Desktop.ViewModels
         public IRegionManager _regionManager;
         private readonly IAuthenticator _authenticator;
         private readonly IEventAggregator _eventAggregator;
-        public EventHandler SuccessfulLogin;
 
         public LoginWindowViewModel(IAuthenticator authenticator,
                                     IEventAggregator eventAggregator)

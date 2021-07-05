@@ -35,6 +35,9 @@ namespace Reception
             containerRegistry.Register<IStatusColor, StatusColor>();
             containerRegistry.RegisterDialog<CreateNewReservationDialog, CreateNewReservationDialogViewModel>();
             containerRegistry.RegisterDialog<EditReservationDialogView, EditReservationDialogViewModel>();
+            containerRegistry.Register<IBookingFacade, BookingFacade>();
+            containerRegistry.Register<IReservationService, ReservationService>();
+            containerRegistry.Register<IGuestService, GuestService>();
 
             containerRegistry.Register<IUpdateReservationFacade, UpdateReservationFacade>();
         }

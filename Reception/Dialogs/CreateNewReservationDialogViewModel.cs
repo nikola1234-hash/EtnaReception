@@ -8,6 +8,8 @@ using BookSoft.Domain.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using Reception.Mediator;
+using Reception.Wrappers;
 
 namespace Reception.Dialogs
 {
@@ -23,40 +25,45 @@ namespace Reception.Dialogs
         private bool _isRoomSelected;
         private bool _isStayTypeSelected;
         private bool _isPeopleNumberValid;
-        
 
-        private string _firstName;
+        private ObservableCollection<Guest> _guests;
 
-        public string FirstName
+        public ObservableCollection<Guest> Guests
         {
-            get { return _firstName; }
-            set { SetProperty(ref _firstName, value); }
+            get { return _guests; }
+            set { SetProperty(ref _guests, value); }
+        }
+        //Selected Guest Id
+
+        private GuestWrapper _guest;
+
+        public GuestWrapper Guest
+        {
+            get { return _guest; }
+            set { SetProperty(ref _guest, value); }
+        }
+        private Guest _selectedGuest;
+
+        private string _address;
+
+        public string Address
+        {
+            get { return _address; }
+            set { SetProperty(ref _address, value); }
         }
 
-        private string _lastName;
 
-        public string LastName
+        public Guest SelectedGuest
         {
-            get { return _lastName; }
-            set { SetProperty(ref _lastName, value); }
+            get { return _selectedGuest; }
+            set
+            {
+                SetProperty(ref _selectedGuest, value);
+                SelectedGuestChange.GetIstance().OnSelectedGuestChanged(this, _selectedGuest);
+            }
         }
 
-        private string _telephone;
-
-        public string Telephone
-        {
-            get { return _telephone; }
-            set { SetProperty(ref _telephone, value); }
-        }
-
-        private string _emailAddress;
-
-        public string EmailAddress
-        {
-            get { return _emailAddress; }
-            set { SetProperty(ref _emailAddress, value); }
-        }
-
+   
         private int _peopleNumber;
 
         public int PeopleNumber
@@ -167,7 +174,9 @@ namespace Reception.Dialogs
         }
         public DelegateCommand CloseCommand { get; }
         public DelegateCommand NextCommand { get; }
+        public DelegateCommand CreateReservationCommand { get; }
         #endregion
+        
         #region Events Region
 
         private void CreateNewReservationDialogViewModel_OnDateChanged()
@@ -207,24 +216,72 @@ namespace Reception.Dialogs
 
         private readonly IRoomService _roomService;
         private readonly IStayTypeService _stayTypeService;
-        public CreateNewReservationDialogViewModel(IRoomService roomService, IStayTypeService stayTypeService)
+        private readonly ISearchGuestService _searchGuestService;
+        public CreateNewReservationDialogViewModel(IRoomService roomService, IStayTypeService stayTypeService, ISearchGuestService searchGuestService)
         {
             _roomService = roomService;
             _stayTypeService = stayTypeService;
+            _searchGuestService = searchGuestService;
+
+            Guest = new GuestWrapper();
+
             NextCommand = new DelegateCommand(NextCommandExecute);
             CloseCommand = new DelegateCommand(OnCloseCommand);
-
+            CreateReservationCommand = new DelegateCommand(CreateReservation, CanCreateReservation);
+            SelectedGuestChange.GetIstance().SelectedGuestHasChanged += CreateNewReservationDialogViewModel_SelectedGuestHasChanged;
+            Guest.StateChanged += Guest_StateChanged;
         }
 
 
+        private void Guest_StateChanged()
+        {
+            if (Guests.Any())
+            {
+                Guests.Clear();
+            }
+
+            var guests = _searchGuestService.SearchGuest(Guest.FirstName, Guest.LastName, Guest.Phone);
+            if (guests.Any())
+            {
+                Guests = new ObservableCollection<Guest>(guests);
+            }
+        }
+
+        private void CreateNewReservationDialogViewModel_SelectedGuestHasChanged(object sender, EventArgs.SelectedGuestEventArgs e)
+        {
+            if (e.Guest != null)
+            {
+                Guest = new GuestWrapper()
+                {
+                    FirstName = e.Guest.FirstName,
+                    LastName = e.Guest.LastName,
+                    Phone = e.Guest.Phone,
+                    Email = e.Guest.Email,
+                    Address = e.Guest.Address
+                };
+
+            }
+        }
+
+        private void CreateReservation()
+        {
+            
+        }
+
+
+        private bool CanCreateReservation()
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
         #region Commands
         private void OnCloseCommand()
         {
+            Close();
             //RequestClose?.Invoke();
-                //Obavesti da je zatvoren dialog dugmetom
-                 //Odnosno da je zatvoren uspesno upisanom rezervacijom
+            //Obavesti da je zatvoren dialog dugmetom
+            //Odnosno da je zatvoren uspesno upisanom rezervacijom
         }
         private void NextCommandExecute()
         {
@@ -276,6 +333,10 @@ namespace Reception.Dialogs
         }
 
 
+        private void Close()
+        {
+            RequestClose?.Invoke(null);
+        }
 
         public string Title => "Upisi rezervaciju";
         public event Action<IDialogResult> RequestClose;

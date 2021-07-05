@@ -16,6 +16,8 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -62,25 +64,80 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="0,0,10,0" Orientation="Vertical">
                         <TextBlock Text="Ime:" />
-                        <TextBox MinWidth="100" Text="{Binding FirstName}" />
+                        <TextBox MinWidth="100" Text="{Binding Guest.FirstName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Prezime:" />
-                        <TextBox MinWidth="100" Text="{Binding LastName}" />
+                        <TextBox MinWidth="100" Text="{Binding Guest.LastName}" />
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="0,0,10,0" Orientation="Vertical">
                         <TextBlock Text="Telefon:" />
-                        <TextBox MinWidth="100" Text="{Binding Telephone}" />
+                        <TextBox MinWidth="100" Text="{Binding Guest.Phone}" />
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Email:" />
-                        <TextBox MinWidth="100" Text="{Binding EmailAddress}" />
+                        <TextBox MinWidth="100" Text="{Binding Guest.Email}" />
+                    </StackPanel>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                        <TextBlock Text="Adresa:" />
+                        <TextBox MinWidth="100" Text="{Binding Guest.Address}" />
+                    </StackPanel>
+
+                </StackPanel>
+                <StackPanel Margin="0,10" Orientation="Horizontal">
+                    <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                        <Button MinWidth="100" Content="Novi gost" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Button
+                            MinWidth="100"
+                            MaxWidth="200"
+                            Content="Postojeci gost" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
+        </Border>
+        <Border
+            Grid.Row="1"
+            Grid.Column="2"
+            MinWidth="300"
+            Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ListView
+                x:Name="guestListView"
+                MaxWidth="300"
+                ItemsSource="{Binding Guests, Mode=OneWay}"
+                SelectedItem="{Binding SelectedGuest}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Gost: " />
+                                <TextBlock Margin="0,0,0,0" Text="{Binding FirstName}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding LastName}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Adresa: " />
+                                    <TextBlock Text="{Binding Address}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Email}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tel: " />
+                                    <TextBlock Text="{Binding Phone}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Border>
     </Grid>
 </UserControl>
