@@ -12,8 +12,6 @@ namespace BookSoft.BLL.Validation
             Match match = rx.Match(input);
             if (match.Success)
                 output = true;
-            else
-                output = false;
             return output;
         }
     }
